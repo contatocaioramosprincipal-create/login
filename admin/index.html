@@ -89,8 +89,8 @@ const N=n=>(+n||0).toLocaleString('pt-BR');
 const pct=(a,b)=>b?Math.round(a/b*100)+'%':'—';
 const TOOL={consulta:'Consulta IA',documentos:'Documentos',calc:'Calculadoras',radar:'Radar Médico',financeiro:'Financeiro',auditor:'Auditor de Convênios',estudio:'Estúdio de Marketing',secretaria:'Secretária',juridico:'Jurídico',vida:'Vida do Médico'};
 const TASK={consulta:'Consulta (documentação)',stt:'Transcrição de áudio (trechos)',doc:'Documento com IA',radar:'Radar (PubMed)',artigo:'Resumo de artigo',revisao:'Revisão para prova',glosas:'Glosas',posts:'Ideias de posts',cfm:'Verificador CFM',aval:'Resposta a avaliação',treino:'Treino da secretária',msg:'Mensagem difícil',posso:'Posso fazer isso?',cardapio:'Cardápio',fisico:'Treino físico'};
-const EV={view:'Abriu página',tool:'Abriu ferramenta',click:'Clicou',install_click:'Tocou em instalar',app_installed:'Instalou o app',app_open:'Abriu o app instalado',signup:'Criou conta',login:'Entrou',ai:'Usou IA'};
-const PAGE=p=>String(p||'').startsWith('/app')?'Plataforma (app)':({'/':'Site (início)','/lab/':'Página do Lab','/admin/':'Relatórios'}[p]||p);
+const EV={lead:'Pediu diagnóstico',view:'Abriu página',tool:'Abriu ferramenta',click:'Clicou',install_click:'Tocou em instalar',app_installed:'Instalou o app',app_open:'Abriu o app instalado',signup:'Criou conta',login:'Entrou',ai:'Usou IA'};
+const PAGE=p=>String(p||'').startsWith('/app')?'Plataforma (app)':({'/':'Início (hub)','/lab/':'AXIS Lab','/admin/':'Relatórios','/secretaria-ia/':'Secretária de IA','/sistemas/':'Sistemas','/marketing/':'Marketing','/como-trabalhamos/':'Como trabalhamos','/sobre/':'Quem somos','/contato/':'Diagnóstico (contato)'}[p]||p);
 const SRC=s=>({direto:'Direto / sem origem',instagram:'Instagram',google:'Google',facebook:'Facebook',whatsapp:'WhatsApp',qr:'QR code'}[s]||s);
 const SEC={servicos:'O que fazemos',metodo:'Como funciona',quem:'Quem conduz',cfm:'CFM',contato:'Contato',ferramentas:'Ferramentas',app:'Instalar'};
 let days=30;
@@ -147,7 +147,7 @@ async function load(){
   <div class="grid">
     <section class="card c8"><h2>Visitantes por dia</h2><p class="sub">Passe o dedo ou o mouse para ver os números de cada dia.</p>${line(j.daily)}</section>
     <section class="card c4"><h2>Do clique ao uso</h2><p class="sub">Pessoas em cada etapa ${periodo}.</p>
-      <div class="fn">${[['Visitaram',f.total],['Viram o site',f.site],['Viram o Lab',f.lab],['Abriram o app',f.app],['Criaram conta',f.signups],['Usaram ferramenta',f.used_tool],['Usaram IA',f.used_ai]].map(([l,v])=>`<div class="r"><span>${l}</span><div class="bar"><i style="width:${f.total?(v/f.total*100):0}%"></i></div><div class="n"><b>${N(v)}</b><small>${pct(v,f.total)}</small></div></div>`).join('')}</div></section>
+      <div class="fn">${[['Visitaram',f.total],['Viram o início',f.site],['Viram o Lab',f.lab],['Abriram o app',f.app],['Criaram conta',f.signups],['Usaram ferramenta',f.used_tool],['Usaram IA',f.used_ai]].map(([l,v])=>`<div class="r"><span>${l}</span><div class="bar"><i style="width:${f.total?(v/f.total*100):0}%"></i></div><div class="n"><b>${N(v)}</b><small>${pct(v,f.total)}</small></div></div>`).join('')}</div></section>
 
     <section class="card c4"><h2>De onde vieram</h2><p class="sub">Visitantes únicos por origem.</p>${bars(j.sources,'src','visitors',s=>esc(SRC(s)))}</section>
     <section class="card c4"><h2>Páginas</h2><p class="sub">Visualizações.</p>${bars(j.pages,'page','views',p=>esc(PAGE(p)))}</section>
