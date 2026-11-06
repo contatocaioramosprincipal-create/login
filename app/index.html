@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>AXIS Lab · Plataforma para médicos</title>
-<meta name="description" content="Ferramentas gratuitas para o consultório: quanto cobrar, convênios que valem a pena, documentos, raio-X do consultório, scripts para a secretária e LGPD.">
+<meta name="description" content="AXIS Lab: 10 ferramentas para o médico. Consulta com IA, documentos, calculadoras clínicas, radar de estudos, financeiro, glosas, marketing ético, secretária, jurídico e vida do médico.">
 <meta name="theme-color" content="#0F2A22">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -189,6 +189,49 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
   .split{display:block}
   .doc{border:0;padding:0;min-height:auto}
 }
+
+/* módulos */
+.mtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px -2px 4px;padding:2px}
+.mtabs::-webkit-scrollbar{display:none}
+.mtabs a{flex:none;min-height:38px;display:inline-flex;align-items:center;padding:6px 14px;border-radius:999px;border:1px solid var(--rule);background:#fff;font-size:14px;text-decoration:none;color:var(--mute)}
+.mtabs a.on{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.chk{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:400;color:var(--ink);margin:0;cursor:pointer;min-height:40px}
+.chk input{width:20px;height:20px;min-height:20px;flex:none;accent-color:var(--sage-d)}
+.res .note+div,.res .note{margin-top:-6px}
+.tool.hero-tool{grid-column:span 2;background:var(--forest);color:var(--cream);border-color:var(--forest)}
+.tool.hero-tool p{color:rgba(242,235,221,.75)}.tool.hero-tool .ic{background:rgba(127,184,154,.18);color:var(--sage-2)}.tool.hero-tool .tag{color:var(--sage-2)}
+.aiform{margin-bottom:16px}
+.airow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.aiout{padding-bottom:48px}
+.aiout:empty{display:none}
+.aires{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:24px 26px;margin-bottom:12px;font-size:15.5px}
+.aires h4{font-family:var(--display);font-size:18px;margin:18px 0 8px}.aires h4:first-child{margin-top:0}
+.aires p{margin:0 0 10px}.aires ul{margin:0 0 12px;padding-left:20px;display:grid;gap:4px}
+.aiload{display:flex;gap:12px;align-items:center;padding:22px;background:#fff;border:1px solid var(--rule);border-radius:20px;color:var(--mute)}
+.spin{width:18px;height:18px;border-radius:50%;border:2px solid var(--rule);border-top-color:var(--sage-d);animation:sp 0.8s linear infinite;display:inline-block;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err{background:#fbeae6;color:var(--red);border-radius:14px;padding:14px 16px}
+details summary{cursor:pointer;min-height:28px}
+.recbox{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.recbtn{display:inline-flex;align-items:center;gap:12px;min-height:56px;padding:12px 24px;border-radius:999px;border:0;background:var(--forest);color:var(--cream);font-weight:600;font-size:16px;cursor:pointer}
+.recbtn .dot{width:14px;height:14px;border-radius:50%;background:#E39C7E}
+.recbtn[aria-pressed="true"]{background:var(--red)}.recbtn[aria-pressed="true"] .dot{background:#fff;animation:pl 1s ease-in-out infinite}
+@keyframes pl{50%{opacity:.3}}
+.rect{font-family:var(--mono);font-size:22px;color:var(--mute)}
+.rrow{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:16px 18px;margin-bottom:10px}
+.rrow small{display:block;color:var(--mute);font-size:13px}
+.rrow.done{opacity:.55}.rrow.late{border-color:#E39C7E}
+.row2{display:flex;gap:12px;padding:6px 0;border-top:1px solid var(--rule);font-size:14.5px}.row2 b{min-width:64px;font-family:var(--mono);font-size:12.5px;color:var(--sage-d);padding-top:2px}
+.chatbox{display:flex;flex-direction:column;gap:10px;margin:16px 0;max-height:60vh;overflow-y:auto;padding:4px}
+.bub{max-width:82%;padding:12px 16px;border-radius:18px;font-size:15px}.bub p{margin:0}
+.bub.pt{align-self:flex-start;background:#fff;border:1px solid var(--rule);border-bottom-left-radius:6px}
+.bub.me{align-self:flex-end;background:#DCF2E4;border-bottom-right-radius:6px}
+.chatin{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding-bottom:48px}
+.pausa{display:grid;gap:22px;justify-items:center;padding:40px 24px;margin-bottom:48px}
+.breath{width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,#A9D4BC,#2f6b4c);display:grid;place-items:center;transform:scale(.6);color:#fff;font-family:var(--display);font-size:22px;text-align:center}
+@media (max-width:900px){.tool.hero-tool{grid-column:span 2}}
+@media (max-width:560px){.tool.hero-tool{grid-column:auto}.rrow{grid-template-columns:1fr auto}.rrow .airow{grid-column:1/-1}.chatin{grid-template-columns:1fr auto}.chatin #cfim{grid-column:1/-1}}
+@media print{.aiform,.airow,.aiout>.hint,.mtabs{display:none!important}.aires{border:0;padding:0}}
 </style>
 </head>
 <body>
@@ -227,356 +270,13 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="/install.js"></script>
-<script>
-(()=>{
-const $=(s,r=document)=>r.querySelector(s);
-let main=$('#main');
-const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
-const brl=n=>isFinite(n)?n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}):'—';
-const brl2=n=>isFinite(n)?n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'—';
-const num=v=>{const n=parseFloat(String(v).replace(/\./g,'').replace(',','.'));return isFinite(n)?n:0};
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2200)}
-async function api(body){try{await fetch('/api/lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})}catch{}}
-const ICON={
- money:'<path d="M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5 9.2 9.5 12 10s5 1.6 5 3.5S14.8 17 12 17s-5-1.1-5-3"/>',
- chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
- doc:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
- scan:'<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/>',
- chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/>',
- shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
- mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
- search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
- check:'<path d="M5 12l4 4 10-10"/>',
- users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
- calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/>'
-};
-const ic=k=>`<span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></span>`;
-const TOOLS=[
- {id:'cobrar',ic:'money',t:'Quanto cobrar pela consulta',d:'Custo real da sua hora e o preço mínimo para fechar o mês no azul.'},
- {id:'convenios',ic:'chart',t:'Quanto cada convênio paga de verdade',d:'Glosa, imposto e prazo na conta: veja quem dá lucro por hora.'},
- {id:'documentos',ic:'doc',t:'Gerador de documentos',d:'Atestado, comparecimento, encaminhamento e orientações, prontos para imprimir.'},
- {id:'raiox',ic:'scan',t:'Raio-X do consultório',d:'12 perguntas e uma nota de 0 a 100 de como o paciente encontra e marca com você.'},
- {id:'scripts',ic:'chat',t:'Scripts para a secretária',d:'Confirmação, falta, remarcação, retorno e pedido de avaliação. É só copiar.'},
- {id:'lgpd',ic:'shield',t:'Checklist LGPD do consultório',d:'O que precisa estar em ordem para proteger os dados dos pacientes.'}
-];
-const SOON=[
- {id:'escriba',ic:'mic',t:'Escriba de consulta com IA',d:'Fale a consulta e receba a evolução pronta para o prontuário.'},
- {id:'glosas',ic:'search',t:'Auditor de glosas',d:'Envie o demonstrativo do convênio e veja o que foi glosado e como recorrer.'},
- {id:'cfm',ic:'check',t:'Verificador CFM',d:'Cole um post ou anúncio e veja o que pode dar problema no conselho.'},
- {id:'simulador',ic:'users',t:'Simulador para a secretária',d:'Treino com uma IA no papel de paciente difícil, com nota e feedback.'},
- {id:'pfpj',ic:'calc',t:'PF ou PJ: quanto você pagaria',d:'Compare carnê-leão e empresa com os seus números.'}
-];
-
-/* ---------- login / cadastro ---------- */
-async function auth(path,body){const r=await fetch('/api/auth/'+path,{method:'POST',headers:{'content-type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)});let j={};try{j=await r.json()}catch{}if(!r.ok||!j.ok)throw new Error(j.error||'Não foi possível agora. Tente de novo.');return j.user}
-function onboarding(mode){
-  mode=mode||(ls.get('axl_had_account',false)?'login':'signup');
-  $('#bar').hidden=true;$('#foot').hidden=true;
-  const pw=(id,ac)=>`<div class="pw"><input id="${id}" name="senha" type="password" required autocomplete="${ac}" minlength="8" placeholder="Mínimo 8 caracteres"><button type="button" class="eye" aria-label="Mostrar senha" data-eye="${id}">Mostrar</button></div>`;
-  main.innerHTML=`<div class="onb">
-  <div class="onb-l">
-    <a class="brand" href="/lab/" aria-label="Voltar ao AXIS Lab"><svg width="30" height="34" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>LAB</span></a>
-    <div>
-      <div class="eyebrow" style="color:var(--sage-2)">Grátis para médicos</div>
-      <h1>Ferramentas que organizam o seu <em>consultório.</em></h1>
-      <ul><li>Quanto cobrar e quais convênios valem a pena</li><li>Documentos prontos em segundos</li><li>Raio-X de como o paciente encontra você</li><li>Scripts e checklist de LGPD para a equipe</li></ul>
-    </div>
-    <p style="font-size:13px;color:rgba(242,235,221,.5)">Feito pela AXIS · marketing, IA e sistemas para médicos</p>
-  </div>
-  <div class="onb-r"><div style="width:100%;max-width:480px;margin:0 auto">
-    <div class="tabs" role="tablist" aria-label="Acesso">
-      <button class="opt" type="button" role="tab" data-mode="login" aria-pressed="${mode==='login'}">Entrar</button>
-      <button class="opt" type="button" role="tab" data-mode="signup" aria-pressed="${mode==='signup'}">Criar conta</button>
-    </div>
-    ${mode==='login'?`<form id="authF" novalidate style="display:grid;gap:16px">
-      <div><h2 style="font-size:28px">Bem-vindo(a) de volta.</h2></div>
-      <div class="field"><label for="l-mail">E-mail</label><input id="l-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
-      <div class="field"><label for="l-pw">Senha</label>${pw('l-pw','current-password')}</div>
-      <p class="hint" id="authErr" role="alert" style="color:var(--red)"></p>
-      <button class="btn" type="submit">Entrar</button>
-      <p class="hint">Esqueceu a senha? Fale com a AXIS no <a href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Instagram</a> que liberamos um novo acesso.</p>
-    </form>`:`<form id="authF" novalidate style="display:grid;gap:16px">
-      <div><h2 style="font-size:28px">Crie seu acesso grátis.</h2><p class="muted" style="margin-top:4px">Leva 30 segundos.</p></div>
-      <div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" name="nome" required autocomplete="name" placeholder="Dra. Ana Souza"></div>
-      <div class="grid2">
-        <div class="field"><label for="f-esp">Especialidade</label><input id="f-esp" name="especialidade" required placeholder="Dermatologia" list="esps"></div>
-        <div class="field"><label for="f-crm">CRM / UF <span style="font-weight:400">(opcional)</span></label><input id="f-crm" name="crm" placeholder="123456/SP"></div>
-        <div class="field"><label for="f-cid">Cidade / UF</label><input id="f-cid" name="cidade" required placeholder="Sorocaba/SP"></div>
-        <div class="field"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(15) 99999-9999"></div>
-      </div>
-      <div class="field"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
-      <div class="field"><label for="f-pw">Crie uma senha</label>${pw('f-pw','new-password')}</div>
-      <label class="consent"><input type="checkbox" id="f-ok" name="consent"> <span>Concordo que a AXIS guarde estes dados para liberar o acesso e entrar em contato comigo. Nada de dados de pacientes é guardado nas ferramentas.</span></label>
-      <p class="hint" id="authErr" role="alert" style="color:var(--red)"></p>
-      <button class="btn" type="submit">Criar conta e entrar</button>
-    </form>`}
-  </div></div></div>
-  <datalist id="esps">${['Clínica médica','Dermatologia','Pediatria','Ginecologia e obstetrícia','Urologia','Cardiologia','Ortopedia','Psiquiatria','Endocrinologia','Oftalmologia','Otorrinolaringologia','Neurologia','Gastroenterologia','Medicina do trabalho','Perícia médica','Cirurgia plástica','Nutrologia'].map(e=>`<option value="${e}">`).join('')}</datalist>`;
-  main.addEventListener('click',e=>{const t=e.target.closest('[data-mode]');if(t){onboarding(t.dataset.mode)}
-    const eye=e.target.closest('[data-eye]');if(eye){const i=$('#'+eye.dataset.eye);const sh=i.type==='password';i.type=sh?'text':'password';eye.textContent=sh?'Ocultar':'Mostrar'}});
-  $('#authF').addEventListener('submit',async e=>{
-    e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());const err=$('#authErr');err.textContent='';
-    const btn=e.target.querySelector('[type=submit]');btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
-    try{
-      if(mode==='signup'){
-        if(!f.nome||!f.especialidade||!f.cidade||!f.whatsapp||!f.email)throw new Error('Preencha nome, especialidade, cidade, WhatsApp e e-mail.');
-        if(String(f.whatsapp).replace(/\D/g,'').length<10)throw new Error('Confira o WhatsApp com DDD.');
-        if(String(f.senha||'').length<8)throw new Error('A senha precisa ter pelo menos 8 caracteres.');
-        if(!$('#f-ok').checked)throw new Error('Marque a autorização para continuar.');
-        f.consent=true;
-      }
-      const u=await auth(mode,f);ls.set('axl_had_account',true);user=u;location.hash='#/';route();
-    }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent=old}
-  });
-}
-
-/* ---------- dashboard ---------- */
-function home(p){
-  const first=(p.nome||'').replace(/^(dra?\.?\s*)/i,'').split(' ')[0];
-  main.innerHTML=`<div class="wrap">
-  <section class="hello"><div class="eyebrow">AXIS Lab · ${esc(p.especialidade||'')}</div><h1 style="margin-top:8px">Olá, ${esc(first||'doutor(a)')}. <span class="serif">O que vamos resolver hoje?</span></h1></section>
-  <div class="tools">${TOOLS.map(t=>`<a class="tool" href="#/${t.id}">${ic(t.ic)}<h3>${t.t}</h3><p>${t.d}</p><span class="tag">Abrir →</span></a>`).join('')}</div>
-  <div class="sec-t"><h2>Chegando com IA</h2><span class="muted" style="font-size:14px">Peça para testar antes</span></div>
-  <div class="tools">${SOON.map(t=>`<button class="tool soon" type="button" data-soon="${t.id}">${ic(t.ic)}<h3>${t.t}</h3><p>${t.d}</p><span class="tag">Em breve</span></button>`).join('')}</div>
-  <div class="card" style="margin:20px 0 48px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--forest);color:var(--cream);border:0">
-    <div style="max-width:560px"><div class="eyebrow" style="color:var(--sage-2)">Quer que a gente faça por você?</div><p style="margin-top:8px;font-size:17px">A AXIS cuida do site, do Google, do Instagram, dos anúncios e da secretária de IA do seu consultório.</p></div>
-    <a class="btn" style="background:var(--cream);color:var(--forest)" href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Falar com a AXIS</a>
-  </div></div>`;
-  main.querySelectorAll('[data-soon]').forEach(b=>b.addEventListener('click',()=>{
-    const t=SOON.find(x=>x.id===b.dataset.soon);$('#soonT').textContent=t.t;$('#soonP').textContent=t.d+' Estamos terminando. Quem pedir agora testa primeiro.';
-    const d=$('#soonDlg');$('#soonYes').onclick=()=>{api({type:'interesse',ferramenta:t.id,...p});d.close();toast('Anotado! Você será avisado(a).')};d.showModal();
-  }));
-}
-const head=(t,s)=>`<div class="wrap"><div class="view-h noprint"><a class="back" href="#/">← Ferramentas</a><h1>${t}</h1>${s?`<p class="muted" style="max-width:640px">${s}</p>`:''}</div>`;
-
-/* ---------- quanto cobrar ---------- */
-function cobrar(){
-  const d=ls.get('axl_cobrar',{aluguel:3500,secretaria:3200,sistemas:400,contador:600,mkt:1500,outros:800,prolabore:25000,imp:12,cartao:3,horas:30,cph:2,ocup:75,faltas:12});
-  const F=[['aluguel','Aluguel e condomínio'],['secretaria','Secretária (salário + encargos)'],['sistemas','Sistemas e softwares'],['contador','Contador'],['mkt','Marketing'],['outros','Outros custos fixos']];
-  main.innerHTML=head('Quanto cobrar pela consulta','Coloque os seus números. Tudo fica só neste aparelho.')+`
-  <div class="split"><div class="form-col card form-sec" id="cf">
-    <h3>Custos fixos por mês (R$)</h3>
-    <div class="grid2">${F.map(([k,l])=>`<div class="field"><label for="c-${k}">${l}</label><input id="c-${k}" data-k="${k}" inputmode="decimal" value="${d[k]}"></div>`).join('')}</div>
-    <h3>Quanto você quer tirar por mês (R$)</h3>
-    <div class="field"><label for="c-prolabore">Ganho líquido desejado</label><input id="c-prolabore" data-k="prolabore" inputmode="decimal" value="${d.prolabore}"></div>
-    <h3>Agenda</h3>
-    <div class="grid2">
-      <div class="field"><label for="c-horas">Horas de atendimento por semana</label><input id="c-horas" data-k="horas" inputmode="decimal" value="${d.horas}"></div>
-      <div class="field"><label for="c-cph">Consultas por hora</label><input id="c-cph" data-k="cph" inputmode="decimal" value="${d.cph}"></div>
-      <div class="field"><label for="c-ocup">Agenda preenchida (%)</label><input id="c-ocup" data-k="ocup" inputmode="decimal" value="${d.ocup}"></div>
-      <div class="field"><label for="c-faltas">Faltas (%)</label><input id="c-faltas" data-k="faltas" inputmode="decimal" value="${d.faltas}"></div>
-    </div>
-    <h3>Descontos sobre o que entra (%)</h3>
-    <div class="grid2">
-      <div class="field"><label for="c-imp">Impostos</label><input id="c-imp" data-k="imp" inputmode="decimal" value="${d.imp}"><p class="hint">Confirme a sua alíquota com o contador.</p></div>
-      <div class="field"><label for="c-cartao">Taxa de cartão/maquininha</label><input id="c-cartao" data-k="cartao" inputmode="decimal" value="${d.cartao}"></div>
-    </div>
-  </div>
-  <aside class="res" aria-live="polite" id="cr"></aside></div></div>`;
-  const calc=()=>{
-    const v={};main.querySelectorAll('[data-k]').forEach(i=>v[i.dataset.k]=num(i.value));ls.set('axl_cobrar',v);
-    const fixos=F.reduce((s,[k])=>s+v[k],0);const horasMes=v.horas*4.33;
-    const consultas=horasMes*v.cph*(v.ocup/100)*(1-v.faltas/100);
-    const desc=(v.imp+v.cartao)/100;const fat=(fixos+v.prolabore)/Math.max(.01,1-desc);
-    const preco=consultas>0?fat/consultas:NaN;const custoH=horasMes>0?fixos/horasMes:NaN;const empate=consultas>0?(fixos/Math.max(.01,1-desc))/consultas:NaN;
-    $('#cr').innerHTML=`<div class="lbl">Preço mínimo por consulta</div><div class="big">${brl(Math.ceil(preco/10)*10)}</div>
-      <p class="note">Abaixo disso você não chega ao ganho que definiu.</p>
-      <div><div class="row"><span>Consultas realizadas por mês</span><b>${Math.round(consultas)||0}</b></div>
-      <div class="row"><span>Custos fixos por mês</span><b>${brl(fixos)}</b></div>
-      <div class="row"><span>Custo de cada hora aberta</span><b>${brl(custoH)}</b></div>
-      <div class="row"><span>Preço só para pagar as contas</span><b>${brl(empate)}</b></div>
-      <div class="row"><span>Faturamento necessário</span><b>${brl(fat)}</b></div></div>
-      <p class="note">Cada 10% a menos de faltas reduz o preço mínimo em cerca de ${brl(preco-(fat/(horasMes*v.cph*(v.ocup/100)*(1-Math.max(0,v.faltas-10)/100))))}. Confirmação de consulta ajuda aqui.</p>`;
-  };
-  main.addEventListener('input',calc);calc();
-}
-
-/* ---------- convênios ---------- */
-function convenios(){
-  const d=ls.get('axl_conv',{part:400,cphPart:2,imp:12,taxa:1,rows:[{n:'Convênio A',v:110,dias:60,g:5,cph:3},{n:'Convênio B',v:180,dias:45,g:8,cph:2},{n:'Convênio C',v:90,dias:90,g:12,cph:3}]});
-  main.innerHTML=head('Quanto cada convênio paga de verdade','Coloque o valor que cada convênio paga por consulta. A conta desconta glosa, imposto e o custo de esperar o pagamento.')+`
-  <div class="split"><div class="form-col card form-sec">
-    <h3>Particular</h3>
-    <div class="grid3">
-      <div class="field"><label for="v-part">Valor da consulta (R$)</label><input id="v-part" inputmode="decimal" value="${d.part}"></div>
-      <div class="field"><label for="v-cphp">Consultas por hora</label><input id="v-cphp" inputmode="decimal" value="${d.cphPart}"></div>
-      <div class="field"><label for="v-imp">Impostos (%)</label><input id="v-imp" inputmode="decimal" value="${d.imp}"></div>
-    </div>
-    <h3>Convênios</h3>
-    <div class="cv" id="cv"></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost sm" type="button" id="cvAdd">+ Adicionar convênio</button></div>
-    <div class="field" style="max-width:260px"><label for="v-taxa">Custo do dinheiro parado (% ao mês)</label><input id="v-taxa" inputmode="decimal" value="${d.taxa}"><p class="hint">Quanto o atraso no pagamento custa para você.</p></div>
-  </div><aside class="res" id="vr" aria-live="polite"></aside></div></div>`;
-  const cv=$('#cv');
-  const rowH=(r,i)=>`<div class="cv-row" data-i="${i}">
-    <div class="field"><label>Convênio</label><input data-f="n" value="${esc(r.n)}"></div>
-    <div class="field"><label>R$ por consulta</label><input data-f="v" inputmode="decimal" value="${r.v}"></div>
-    <div class="field"><label>Glosa (%)</label><input data-f="g" inputmode="decimal" value="${r.g}"></div>
-    <div class="field"><label>Paga em (dias)</label><input data-f="dias" inputmode="decimal" value="${r.dias}"></div>
-    <button class="x" type="button" aria-label="Remover ${esc(r.n)}" data-del="${i}">×</button>
-    <div class="field" style="grid-column:1/-1;max-width:220px"><label>Consultas por hora neste convênio</label><input data-f="cph" inputmode="decimal" value="${r.cph}"></div></div>`;
-  const draw=()=>{cv.innerHTML=d.rows.map(rowH).join('');calc()};
-  const read=()=>{d.part=num($('#v-part').value);d.cphPart=num($('#v-cphp').value);d.imp=num($('#v-imp').value);d.taxa=num($('#v-taxa').value);
-    cv.querySelectorAll('.cv-row').forEach(el=>{const r=d.rows[+el.dataset.i];el.querySelectorAll('[data-f]').forEach(i=>r[i.dataset.f]=i.dataset.f==='n'?i.value:num(i.value))});ls.set('axl_conv',d)};
-  const calc=()=>{read();
-    const imp=d.imp/100;const partH=d.part*(1-imp)*d.cphPart;
-    const list=d.rows.map(r=>{const liq=r.v*(1-r.g/100)*(1-imp)*(1-(d.taxa/100)*(r.dias/30));return{n:r.n||'Sem nome',liq,h:liq*r.cph}}).sort((a,b)=>b.h-a.h);
-    const max=Math.max(partH,...list.map(x=>x.h),1);
-    $('#vr').innerHTML=`<div class="lbl">Quanto entra por hora de agenda</div>
-    <div class="bars"><div class="barrow"><div class="t"><b>Particular</b><span>${brl(partH)}/h</span></div><div class="track"><div class="fill" style="width:${partH/max*100}%"></div></div></div>
-    ${list.map(x=>`<div class="barrow"><div class="t"><b>${esc(x.n)}</b><span>${brl(x.h)}/h · ${brl2(x.liq)} líq./consulta</span></div><div class="track"><div class="fill ${x.h<partH*.5?'bad':''}" style="width:${Math.max(2,x.h/max*100)}%"></div></div></div>`).join('')}</div>
-    ${list.length?`<p class="note">${esc(list[list.length-1].n)} rende ${brl(list[list.length-1].h)} por hora, ${Math.round((1-list[list.length-1].h/Math.max(partH,1))*100)}% menos que uma hora de particular. Vale avaliar se a agenda dele não deveria virar horário particular.</p>`:''}
-    <p class="note">Conta simplificada: valor × (1 − glosa) × (1 − imposto) × (1 − custo do prazo).</p>`;
-  };
-  main.addEventListener('input',calc);
-  cv.addEventListener('click',e=>{const i=e.target.dataset.del;if(i!==undefined){read();d.rows.splice(+i,1);draw()}});
-  $('#cvAdd').addEventListener('click',()=>{read();d.rows.push({n:'Novo convênio',v:100,dias:60,g:5,cph:3});draw()});
-  draw();
-}
-
-/* ---------- documentos ---------- */
-function documentos(p){
-  const today=new Date().toISOString().slice(0,10);
-  main.innerHTML=head('Gerador de documentos','Preencha, confira e imprima ou salve em PDF. Os dados do paciente não são guardados.')+`
-  <div class="split"><div class="form-col card form-sec">
-    <div class="field"><label for="d-tipo">Documento</label><select id="d-tipo">
-      <option value="atestado">Atestado médico</option><option value="comparecimento">Declaração de comparecimento</option>
-      <option value="encaminhamento">Encaminhamento</option><option value="orientacoes">Orientações ao paciente</option></select></div>
-    <div class="grid2">
-      <div class="field"><label for="d-med">Médico(a)</label><input id="d-med" value="${esc(p.nome||'')}"></div>
-      <div class="field"><label for="d-crm">CRM / RQE</label><input id="d-crm" value="${esc(p.crm?('CRM '+p.crm):'')}"></div>
-      <div class="field"><label for="d-esp">Especialidade</label><input id="d-esp" value="${esc(p.especialidade||'')}"></div>
-      <div class="field"><label for="d-cid">Cidade</label><input id="d-cid" value="${esc(p.cidade||'')}"></div>
-    </div>
-    <div class="field"><label for="d-pac">Nome do paciente</label><input id="d-pac" autocomplete="off"></div>
-    <div class="grid2">
-      <div class="field"><label for="d-data">Data do atendimento</label><input id="d-data" type="date" value="${today}"></div>
-      <div class="field" data-for="comparecimento"><label for="d-hora">Horário (das … às …)</label><input id="d-hora" placeholder="14h00 às 15h00"></div>
-      <div class="field" data-for="atestado"><label for="d-dias">Dias de afastamento</label><input id="d-dias" inputmode="numeric" value="1"></div>
-      <div class="field" data-for="atestado"><label for="d-cid10">CID (opcional)</label><input id="d-cid10" placeholder="Só com autorização do paciente"></div>
-      <div class="field" data-for="encaminhamento"><label for="d-para">Encaminhar para</label><input id="d-para" placeholder="Cardiologia"></div>
-    </div>
-    <div class="field" data-for="encaminhamento orientacoes"><label for="d-txt" id="d-txtl">Motivo / resumo</label><textarea id="d-txt"></textarea></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" onclick="print()">Imprimir ou salvar PDF</button><button class="btn ghost" type="button" id="d-copy">Copiar texto</button></div>
-  </div>
-  <div><article class="doc" id="doc" aria-label="Pré-visualização do documento"></article></div></div></div>`;
-  const g=id=>$('#'+id).value.trim();
-  const fmt=s=>{if(!s)return'___/___/____';const[y,m,dd]=s.split('-');return`${dd}/${m}/${y}`};
-  const ext=s=>{const n=new Date(s+'T12:00:00');return isNaN(n)?'':n.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})};
-  const draw=()=>{
-    const t=g('d-tipo');main.querySelectorAll('[data-for]').forEach(el=>el.hidden=!el.dataset.for.split(' ').includes(t));
-    $('#d-txtl').textContent=t==='orientacoes'?'Orientações (uma por linha)':'Motivo / resumo clínico';
-    const pac=g('d-pac')||'[nome do paciente]',data=fmt(g('d-data'));let T='',B='';
-    if(t==='atestado'){const d=parseInt(g('d-dias'))||1;T='Atestado médico';B=`Atesto, para os devidos fins, que ${pac} esteve sob meus cuidados em ${data}, necessitando de afastamento de suas atividades por ${d} (${d===1?'um':d}) dia${d>1?'s':''} a partir desta data.${g('d-cid10')?`\n\nCID: ${g('d-cid10')} (informado com autorização do paciente).`:''}`}
-    if(t==='comparecimento'){T='Declaração de comparecimento';B=`Declaro, para os devidos fins, que ${pac} compareceu a consulta médica neste consultório em ${data}${g('d-hora')?`, no horário de ${g('d-hora')}`:''}.`}
-    if(t==='encaminhamento'){T='Encaminhamento';B=`Ao(À) colega de ${g('d-para')||'[especialidade]'},\n\nEncaminho o(a) paciente ${pac} para avaliação e conduta.\n\n${g('d-txt')||'[motivo do encaminhamento e resumo clínico]'}\n\nAgradeço a atenção e coloco-me à disposição.`}
-    if(t==='orientacoes'){T='Orientações';const it=(g('d-txt')||'[escreva cada orientação em uma linha]').split('\n').filter(Boolean);B=`${pac},\n\n`+it.map(x=>'• '+x).join('\n')+`\n\nEm caso de piora ou dúvida, entre em contato com o consultório ou procure atendimento de urgência.`}
-    $('#doc').innerHTML=`<div class="dh"><b>${esc(g('d-med')||'[nome do médico]')}</b><small>${esc([g('d-esp'),g('d-crm')].filter(Boolean).join(' · '))}</small></div><h2>${T}</h2><div class="body">${esc(B)}</div>
-      <div class="sign"><p style="margin-bottom:46px">${esc(g('d-cid')||'')}${g('d-cid')?', ':''}${ext(g('d-data'))}</p><i></i>${esc(g('d-med')||'')}<br>${esc(g('d-crm')||'')}</div>`;
-  };
-  main.addEventListener('input',draw);main.addEventListener('change',draw);
-  $('#d-copy').addEventListener('click',()=>{navigator.clipboard?.writeText($('#doc').innerText).then(()=>toast('Texto copiado'))});
-  draw();
-}
-
-/* ---------- raio-x ---------- */
-const RX=[
- ['Google','Seu perfil no Google (Perfil da Empresa) está verificado e com fotos reais do consultório?'],
- ['Google','Você tem mais de 30 avaliações no Google e responde a elas?'],
- ['Google','Horário, telefone/WhatsApp e link de agendamento estão corretos no Google?'],
- ['Instagram','Você posta pelo menos 2 vezes por semana no Instagram?'],
- ['Instagram','A bio diz claramente sua especialidade, cidade e como marcar?'],
- ['Instagram','Seu conteúdo explica e tira dúvidas (não só divulga)?'],
- ['Site','Você tem site próprio que abre bem no celular?'],
- ['Site','O site mostra CRM/RQE e tem botão direto para o WhatsApp?'],
- ['Atendimento','O WhatsApp responde novos contatos em menos de 15 minutos, inclusive à noite?'],
- ['Atendimento','A secretária confirma as consultas na véspera?'],
- ['Atendimento','Você sabe quantos contatos chegam por mês e quantos viram consulta?'],
- ['Atendimento','Pacientes que somem recebem uma mensagem de retorno?']
-];
-const RXR={Google:'Complete o Perfil da Empresa no Google com fotos reais, horários e link de agendamento, e peça avaliações depois de cada consulta.',Instagram:'Tenha uma rotina de conteúdo educativo (2 a 3 por semana) e uma bio com especialidade, cidade e link para marcar.',Site:'Um site simples, rápido no celular, com CRM/RQE e botão de WhatsApp, passa confiança para quem pesquisa você.',Atendimento:'Responder rápido e confirmar consultas é o que mais aumenta a agenda. Uma secretária de IA atende em segundos, a qualquer hora.'};
-function raiox(p){
-  const a=ls.get('axl_rx',{});
-  let h=head('Raio-X do consultório','Responda com sinceridade. A nota mostra onde o paciente se perde entre encontrar você e marcar a consulta.')+'<div class="split"><div class="form-col card">';
-  let last='';RX.forEach(([ar,q],i)=>{if(ar!==last){h+=`<div class="area">${ar}</div>`;last=ar}
-    h+=`<div class="q" role="group" aria-label="${esc(q)}"><b>${q}</b><div class="opts">${[['2','Sim'],['1','Em parte'],['0','Não']].map(([v,l])=>`<button type="button" class="opt" data-q="${i}" data-v="${v}" aria-pressed="${a[i]===v}">${l}</button>`).join('')}</div></div>`});
-  h+='</div><aside class="res" id="rr" aria-live="polite"></aside></div></div>';main.innerHTML=h;
-  const calc=()=>{
-    const done=Object.keys(a).length;const areas={};RX.forEach(([ar],i)=>{areas[ar]=areas[ar]||{s:0,n:0};areas[ar].n+=2;areas[ar].s+=+(a[i]??0)});
-    const score=Math.round(RX.reduce((s,_,i)=>s+ +(a[i]??0),0)/(RX.length*2)*100);
-    const weak=Object.entries(areas).sort((x,y)=>x[1].s/x[1].n-y[1].s/y[1].n).slice(0,2);
-    $('#rr').innerHTML=done<RX.length?`<div class="lbl">Sua nota</div><div class="big">${done}/${RX.length}</div><p class="note">Responda todas as perguntas para ver a nota e o que priorizar.</p>`:
-    `<div class="lbl">Nota do consultório</div><div class="big">${score}<span style="font-size:20px;opacity:.6">/100</span></div>
-    <p class="note">${score>=80?'Muito bom. Agora é manter a constância.':score>=50?'Base boa, mas tem pacientes escapando no caminho.':'Tem muito paciente procurando e não chegando até você.'}</p>
-    <div class="bars">${Object.entries(areas).map(([k,v])=>`<div class="barrow"><div class="t"><b>${k}</b><span>${Math.round(v.s/v.n*100)}%</span></div><div class="track"><div class="fill ${v.s/v.n<.5?'bad':''}" style="width:${Math.max(3,v.s/v.n*100)}%"></div></div></div>`).join('')}</div>
-    <div class="lbl" style="margin-top:6px">Por onde começar</div><ul class="recs">${weak.map(([k])=>`<li>${RXR[k]}</li>`).join('')}</ul>
-    <a class="btn" href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Quero ajuda da AXIS com isso</a>`;
-    if(done===RX.length&&!ls.get('axl_rx_sent',false)){ls.set('axl_rx_sent',true);api({type:'raiox',nota:score,...p})}
-  };
-  main.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;a[b.dataset.q]=b.dataset.v;ls.set('axl_rx',a);ls.set('axl_rx_sent',false);
-    main.querySelectorAll(`.opt[data-q="${b.dataset.q}"]`).forEach(x=>x.setAttribute('aria-pressed',x===b));calc()});
-  calc();
-}
-
-/* ---------- scripts ---------- */
-const SC={
- 'Primeiro contato':[['Boas-vindas','Olá, [Nome]! Aqui é a [Secretária], do consultório da [Dra./Dr. Nome]. Que bom que você entrou em contato 😊\nPara eu te ajudar a marcar, a consulta seria particular ou por convênio?'],['Valor da consulta (particular)','A consulta particular com a [Dra./Dr. Nome] é R$ [valor] e dura cerca de [tempo]. Ela inclui [retorno em até X dias, se houver].\nTenho horários na [dia] às [hora] ou na [dia] às [hora]. Qual fica melhor para você?']],
- 'Confirmação':[['Véspera da consulta','Olá, [Nome]! Passando para confirmar sua consulta com a [Dra./Dr. Nome] amanhã, [dia], às [hora].\nResponda 1 para confirmar ou 2 se precisar remarcar.\nEndereço: [endereço]'],['No dia','Bom dia, [Nome]! Te esperamos hoje às [hora]. Se tiver exames anteriores, traga para a consulta. Até já!']],
- 'Faltas e remarcação':[['Paciente faltou','Olá, [Nome]! Sentimos sua falta hoje na consulta das [hora]. Aconteceu alguma coisa?\nSe quiser, já te passo novos horários para remarcar.'],['Remarcação pelo consultório','Olá, [Nome]! Precisamos remarcar sua consulta de [dia] por um imprevisto da agenda. Pedimos desculpas.\nTenho [opção 1] ou [opção 2]. Qual fica melhor?']],
- 'Retorno e avaliação':[['Lembrete de retorno','Olá, [Nome]! A [Dra./Dr. Nome] pediu para lembrar do seu retorno, previsto para [período].\nQuer que eu já reserve um horário?'],['Pedido de avaliação no Google','Olá, [Nome]! Obrigada pela confiança na consulta de hoje.\nSe puder, deixe sua avaliação sobre o atendimento no Google, isso ajuda outras pessoas a nos encontrarem: [link]\n(Não precisa contar nada sobre a consulta, só como foi ser atendido(a).)']],
- 'Cobrança':[['Lembrete gentil','Olá, [Nome]! Tudo bem? Identificamos que o pagamento referente a [serviço] de [data] ficou em aberto.\nSe já pagou, por favor desconsidere. Se preferir, envio a chave Pix: [chave].']]
-};
-function scripts(){
-  const cats=Object.keys(SC);let cur=cats[0];
-  main.innerHTML=head('Scripts para a secretária','Mensagens prontas para o WhatsApp. Troque o que está entre colchetes e copie.')+`<div class="tabs" role="tablist">${cats.map(c=>`<button class="opt" type="button" role="tab" data-c="${c}" aria-pressed="${c===cur}">${c}</button>`).join('')}</div><div class="scr" id="sc"></div></div>`;
-  const draw=()=>{$('#sc').innerHTML=SC[cur].map(([t,x],i)=>`<div class="card"><div class="top"><h3>${t}</h3><button class="btn ghost sm" type="button" data-cp="${i}">Copiar</button></div><p>${esc(x)}</p></div>`).join('')};
-  main.addEventListener('click',e=>{const c=e.target.closest('[data-c]');if(c){cur=c.dataset.c;main.querySelectorAll('[data-c]').forEach(b=>b.setAttribute('aria-pressed',b===c));draw()}
-    const k=e.target.closest('[data-cp]');if(k){navigator.clipboard?.writeText(SC[cur][+k.dataset.cp][1]).then(()=>toast('Mensagem copiada'))}});
-  draw();
-}
-
-/* ---------- lgpd ---------- */
-const LG=[
- ['Prontuários com acesso por usuário e senha individual','Cada pessoa da equipe tem o próprio login, nada de senha compartilhada.'],
- ['Termo de sigilo assinado pela equipe','Secretária e assistentes assinam compromisso de confidencialidade.'],
- ['Aviso de privacidade disponível ao paciente','Na recepção ou no site: quais dados você coleta e para quê.'],
- ['Consentimento para fotos e uso de imagem','Por escrito, antes de qualquer foto, e separado para uso em redes sociais.'],
- ['Nada de dados de paciente em grupos de WhatsApp pessoais','Exames e laudos circulam só por canal do consultório.'],
- ['Computadores com senha e bloqueio automático de tela','E antivírus atualizado.'],
- ['Backup automático e testado dos dados','Pelo menos semanal, guardado fora do consultório.'],
- ['Papéis com dados descartados de forma segura','Fragmentadora, nunca no lixo comum.'],
- ['Contratos com fornecedores que acessam dados','Sistema de prontuário, laboratório e contador com cláusula de proteção de dados.'],
- ['Responsável definido para pedidos de pacientes','Quem responde se um paciente pedir cópia ou exclusão dos dados.'],
- ['Plano para incidente de vazamento','Saber o que fazer e a quem avisar se algo vazar.'],
- ['Avaliações respondidas sem citar o atendimento','Nunca confirmar que a pessoa é paciente nem falar do caso em público.']
-];
-function lgpd(){
-  const a=ls.get('axl_lgpd',{});
-  main.innerHTML=head('Checklist LGPD do consultório','Marque o que já está em ordem. Fica salvo neste aparelho para você voltar depois.')+`<div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b id="lgN"></b><span class="muted" style="font-size:14px">Orientação geral, não substitui assessoria jurídica.</span></div><div class="prog"><i id="lgP"></i></div></div>
-  <div class="ck">${LG.map(([t,s],i)=>`<label><input type="checkbox" data-i="${i}" ${a[i]?'checked':''}><span>${t}<small>${s}</small></span></label>`).join('')}</div></div>`;
-  const upd=()=>{const n=Object.values(a).filter(Boolean).length;$('#lgN').textContent=`${n} de ${LG.length} itens em ordem`;$('#lgP').style.width=(n/LG.length*100)+'%'};
-  main.addEventListener('change',e=>{const i=e.target.dataset.i;if(i!==undefined){a[i]=e.target.checked;ls.set('axl_lgpd',a);upd()}});upd();
-}
-
-/* ---------- router ---------- */
-const VIEWS={cobrar,convenios,documentos,raiox,scripts,lgpd};
-let user;
-async function loadUser(){try{const r=await fetch('/api/auth/me',{credentials:'same-origin'});const j=await r.json();return j.user||null}catch{return null}}
-async function route(){
-  const fresh=main.cloneNode(false);main.replaceWith(fresh);main=fresh;
-  if(user===undefined){main.innerHTML='<div class="wrap" style="padding:80px 0;color:var(--mute)">Carregando…</div>';user=await loadUser()}
-  if(!user){onboarding();return}
-  $('#bar').hidden=false;$('#foot').hidden=false;
-  const k=location.hash.replace(/^#\/?/,'');
-  (VIEWS[k]||home)(user);scrollTo(0,0);
-  document.title=(k&&VIEWS[k]?TOOLS.find(t=>t.id===k).t+' · ':'')+'AXIS Lab';
-}
-$('#logout').addEventListener('click',async()=>{try{await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin'})}catch{}user=null;location.hash='';route()});
-addEventListener('hashchange',()=>route());
-route();
-})();
-</script>
+<script src="/app/core.js?v=3"></script>
+<script src="/app/m-base.js?v=3"></script>
+<script src="/app/m-calc.js?v=3"></script>
+<script src="/app/m-fin.js?v=3"></script>
+<script src="/app/m-ia.js?v=3"></script>
+<script src="/app/m-vida.js?v=3"></script>
+<script src="/app/m-jursec.js?v=3"></script>
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));</script>
 </body>
 </html>
