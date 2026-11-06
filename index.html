@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Marketing, IA e sistemas para médicos. Site, conteúdo, tráfego, CRM e secretária de IA no WhatsApp, dentro das regras do CFM.">
+<meta name="description" content="AXIS Lab: plataforma grátis para médicos. Quanto cobrar, convênios, documentos, raio-X do consultório, scripts e LGPD. E a AXIS para marketing, IA e sistemas.">
 <meta name="theme-color" content="#09201A">
 <link rel="canonical" href="https://axismed.app.br/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AXIS Lab">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:url" content="https://axismed.app.br/">
-<meta property="og:title" content="AXIS · Marketing para médicos">
-<meta property="og:description" content="Marketing, IA e sistemas para médicos. Site, conteúdo, tráfego, CRM e secretária de IA no WhatsApp, dentro das regras do CFM.">
+<meta property="og:title" content="AXIS Lab · Plataforma grátis para médicos">
+<meta property="og:description" content="AXIS Lab: plataforma grátis para médicos. Quanto cobrar, convênios, documentos, raio-X do consultório, scripts e LGPD. E a AXIS para marketing, IA e sistemas.">
 <meta property="og:image" content="https://axismed.app.br/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<title>AXIS · Marketing para médicos</title>
+<title>AXIS Lab · Plataforma grátis para médicos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -131,6 +135,53 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 @media (max-width:560px){.gcard{width:80%;top:0}.wphone{width:68%;top:170px;right:0}.okcard{top:470px;left:0}.stage{height:620px}}
 
 .stp{position:absolute;top:-30px;left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-2);transform:none}
+
+/* plataforma */
+.btn-xl{padding:19px 30px;font-size:17px;border:0;cursor:pointer;font-family:inherit;box-shadow:0 20px 40px -18px rgba(169,212,188,.55)}
+button.btn{border:0;cursor:pointer;font-family:inherit}
+button.btn-g{border:1px solid var(--line);background:transparent}
+.mphone{position:absolute;right:6%;top:0;width:300px;border-radius:40px;padding:10px;background:#0b1512;box-shadow:0 50px 100px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1);transform:rotate(2deg);z-index:2}
+.mp-bar{display:flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border-radius:30px 30px 0 0;padding:20px 18px 14px}
+.mp-bar b{font-family:var(--display);letter-spacing:.3em;font-size:12px}.mp-bar small{font-family:var(--mono);font-size:9px;color:var(--sage-2);border:1px solid rgba(169,212,188,.4);border-radius:999px;padding:1px 6px}
+.mp-body{background:#FBF8F2;border-radius:0 0 30px 30px;padding:18px 14px 22px;color:#14231D}
+.mp-hi{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.15;margin-bottom:14px}.mp-hi em{font-family:var(--serif);font-weight:400;color:#2f6b4c}
+.mp-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mp-t{background:#fff;border:1px solid #e4ddcf;border-radius:14px;padding:12px;display:grid;gap:8px;min-height:84px}
+.mp-t i{width:28px;height:28px;border-radius:8px;background:#E6F1EA;color:#2f6b4c;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700}
+.mp-t b{font-size:12.5px;line-height:1.2}
+.fcard{position:absolute;z-index:3;background:var(--cream);color:var(--forest);border-radius:18px;padding:16px 20px;display:grid;gap:2px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.fcard small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.fcard b{font-family:var(--display);font-size:30px;line-height:1.05}.fcard b span{font-size:16px;opacity:.5}
+.fcard span{font-size:12.5px;opacity:.75}.fcard .neg{color:#a5452f;opacity:1}
+.f1{left:0;top:60px;transform:rotate(-3deg)}
+.f2{left:4%;top:250px;background:#fff;transform:rotate(2deg)}
+.f3{right:0;top:410px;background:var(--sage);color:var(--ink);transform:rotate(-2deg)}
+@media (prefers-reduced-motion:no-preference){.mphone{animation:float 9s ease-in-out infinite}.f1{animation:float 8s ease-in-out infinite .4s}.f2{animation:float 10s ease-in-out infinite 1s}.f3{animation:float 9s ease-in-out infinite reverse}}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{display:flex;flex-direction:column;gap:12px;padding:30px;border-radius:22px;background:rgba(9,32,26,.78);border:1px solid var(--line);text-decoration:none;transition:border-color .25s,transform .25s,background .25s;min-width:0}
+.tcard:hover{border-color:var(--sage);transform:translateY(-3px);background:rgba(15,42,34,.95)}
+.tcard .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.tcard h3{font-size:24px}.tcard p{color:var(--mute);font-size:15.5px}
+.soon{margin-top:34px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-top:26px;border-top:1px solid var(--line)}
+.soon-list{display:flex;gap:10px;flex-wrap:wrap}
+.soon-list span{font-size:14px;padding:8px 14px;border-radius:999px;border:1px dashed rgba(242,235,221,.25);color:var(--mute)}
+.appw{display:grid;grid-template-columns:1.2fr .8fr;gap:64px;align-items:center}
+#app h2{font-size:clamp(36px,4.6vw,64px);line-height:1.02;margin-top:18px}
+.osgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+.osgrid div{padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:rgba(9,32,26,.6)}
+.osgrid b{font-family:var(--display);font-size:18px}.osgrid p{color:var(--mute);font-size:14.5px;margin-top:6px}
+.qrbox{justify-self:center;text-align:center;display:grid;gap:16px;max-width:300px}
+#qr{background:var(--cream);border-radius:24px;padding:22px;width:260px;height:260px;margin:0 auto;display:grid;place-items:center}
+#qr img,#qr canvas{width:216px!important;height:216px!important}
+.qrbox p{color:var(--mute);font-size:14.5px}
+.mfab{display:none;position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:55;justify-content:center;font-size:16px}
+dialog{border:0;border-radius:22px;padding:0;max-width:440px;width:calc(100% - 32px);background:var(--cream);color:var(--forest);box-shadow:0 40px 80px -20px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(6,21,15,.7)}
+.dlg{padding:28px;display:grid;gap:14px}.dlg h3{font-size:22px}.dlg ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:15px}
+.dlg .btn{justify-content:center;background:var(--forest);color:var(--cream)}
+@media (max-width:980px){.tgrid{grid-template-columns:1fr 1fr}.appw{grid-template-columns:1fr}.qrbox{display:none}.hero .stage{height:600px;aspect-ratio:auto}.mphone{right:2%}}
+@media (max-width:560px){.tgrid{grid-template-columns:1fr}.osgrid{grid-template-columns:1fr}.mfab{display:flex}.mphone{width:236px;right:0;top:56px}.f1{top:0;left:0}.f2{top:340px;left:0}.f3{display:none}.hero .stage{height:560px;aspect-ratio:auto}.mp-t{min-height:70px}footer{padding-bottom:90px}}
+
 /* MARQUEE */
 .marquee{border-block:1px solid var(--line);overflow:hidden;padding-block:22px;background:var(--forest)}
 .track{display:flex;gap:56px;width:max-content;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--mute);white-space:nowrap}
@@ -267,8 +318,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       <svg width="34" height="38" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/><rect x="2" y="48" width="40" height="1.4" fill="#7FB89A" opacity=".7"/></svg>
       <b>AXIS</b>
     </a>
-    <div class="navlinks"><a href="#servicos">O que fazemos</a><a href="#metodo">Como funciona</a><a href="#contato">Contato</a></div>
-    <a class="btn btn-p nav-cta" href="#contato">Falar com a AXIS</a>
+    <div class="navlinks"><a href="#ferramentas">Ferramentas</a><a href="#app">App</a><a href="#servicos">Serviços</a><a href="#contato">Contato</a></div>
+    <a class="btn btn-p nav-cta" href="/app/">Entrar na plataforma</a>
   </div>
 </nav>
 
@@ -276,43 +327,86 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="phbg" aria-hidden="true" style="--img:url(img/bghero.jpg);--o1:0.86;--o2:0.94"></div>
   <div class="wrap">
     <div>
-      <div class="eyebrow">Marketing · IA · Sistemas — só para médicos</div>
-      <h1>O médico que o paciente <em class="s">encontra</em>, confia e consegue marcar.</h1>
-      <p class="lede">A AXIS constrói a presença digital, a captação e a operação de consultórios médicos. Site, conteúdo, tráfego, CRM e secretária de IA, tudo conectado.</p>
+      <div class="eyebrow">AXIS Lab · grátis para médicos</div>
+      <h1>A plataforma que organiza o seu <em class="s">consultório.</em></h1>
+      <p class="lede">Quanto cobrar, quais convênios valem a pena, documentos prontos, raio-X do consultório e scripts para a secretária. Grátis, no celular ou no computador.</p>
       <div class="ctas">
-        <a class="btn btn-p" href="#contato">Quero um diagnóstico <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a>
-        <a class="btn btn-g" href="#metodo">Como funciona</a>
+        <button class="btn btn-p btn-xl" type="button" data-install><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Baixar o app grátis</button>
+        <a class="btn btn-g" href="/app/">Usar no navegador</a>
       </div>
-      <div class="creds"><span><i></i>Sem promessa milagrosa</span><span><i></i>Dentro das regras do CFM</span><span><i></i>Feito para médicos</span></div>
+      <div class="creds"><span><i></i>Grátis</span><span><i></i>Celular e computador</span><span><i></i>Dados de paciente não são guardados</span></div>
     </div>
-    <div class="stage" aria-label="Como a AXIS funciona: o paciente encontra, conversa e marca">
-      <div class="ui gcard" aria-hidden="true"><span class="stp">1 · Encontra</span>
-        <div class="gq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>especialista perto de mim</div>
-        <div class="gres"><span class="pin">1</span><div><b>Seu consultório</b><small><em>★★★★★</em> 4,9 · 128 avaliações</small><small>Aberto agora · Agendar pelo WhatsApp</small></div></div>
-      </div>
-      <div class="ui wphone" aria-hidden="true"><span class="stp">2 · Conversa</span>
-        <div class="wtop"><i></i><div><b>Seu consultório</b><small>online</small></div></div>
-        <div class="wbody">
-          <div class="wm in">Oi! Vocês têm horário essa semana?</div>
-          <div class="wm out">Olá! Tem sim. Para eu te ajudar a marcar, qual é o seu nome completo?</div>
-          <div class="wm in">Mariana Alves</div>
-          <div class="wm out">Obrigada, Mariana! A consulta será particular ou por convênio?</div>
-          <div class="wm in">Particular</div>
-          <div class="wm out">Perfeito, vou te mandar os horários disponíveis pra agendamento.</div>
+    <div class="stage" aria-hidden="true">
+      <div class="mphone">
+        <div class="mp-bar"><svg width="16" height="18" viewBox="0 0 44 50"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><small>LAB</small></div>
+        <div class="mp-body">
+          <p class="mp-hi">Olá, Ana. <em>O que vamos resolver hoje?</em></p>
+          <div class="mp-grid">
+            <div class="mp-t"><i>R$</i><b>Quanto cobrar</b></div>
+            <div class="mp-t"><i>▮▮</i><b>Convênios</b></div>
+            <div class="mp-t"><i>✎</i><b>Documentos</b></div>
+            <div class="mp-t"><i>◎</i><b>Raio-X</b></div>
+            <div class="mp-t"><i>✉</i><b>Scripts</b></div>
+            <div class="mp-t"><i>✓</i><b>LGPD</b></div>
+          </div>
         </div>
       </div>
-      <div class="ui okcard" aria-hidden="true"><span class="stp">3 · Marca</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l4 4 10-10"/></svg><div><b>Consulta marcada</b><small>Quinta · 14h00</small></div></div>
-    </div>
+      <div class="fcard f1"><small>Preço mínimo por consulta</small><b>R$ 250</b><span>para fechar o mês no azul</span></div>
+      <div class="fcard f2"><small>Convênio C</small><b>R$ 203/h</b><span class="neg">−71% que uma hora particular</span></div>
+      <div class="fcard f3"><small>Raio-X do consultório</small><b>72<span>/100</span></b></div>
     </div>
   </div>
 </header>
+
+<section id="ferramentas">
+  <div class="phbg" aria-hidden="true" style="--img:url(img/bgserv.jpg);--o1:0.9;--o2:0.95"></div>
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Ferramentas</div><h2>O que tira o sono do médico, <em class="s">resolvido em minutos.</em></h2></div>
+      <p>Não é curso nem conteúdo para ler depois. São ferramentas que você usa no meio da semana, com os seus números, e que respondem na hora.</p>
+    </div>
+    <div class="tgrid">
+      <a class="tcard" href="/app/#/cobrar"><span class="k">Dinheiro</span><h3>Quanto cobrar pela consulta</h3><p>Custo real da sua hora, faltas e impostos na conta. Sai o preço mínimo para fechar o mês no azul.</p></a>
+      <a class="tcard" href="/app/#/convenios"><span class="k">Dinheiro</span><h3>Quanto cada convênio paga de verdade</h3><p>Glosa, imposto e prazo de pagamento descontados. Veja quem dá lucro por hora de agenda.</p></a>
+      <a class="tcard" href="/app/#/documentos"><span class="k">Rotina</span><h3>Documentos em segundos</h3><p>Atestado, declaração de comparecimento, encaminhamento e orientações ao paciente, prontos para imprimir.</p></a>
+      <a class="tcard" href="/app/#/raiox"><span class="k">Pacientes</span><h3>Raio-X do consultório</h3><p>12 perguntas e uma nota de 0 a 100 de como o paciente encontra, confia e marca com você.</p></a>
+      <a class="tcard" href="/app/#/scripts"><span class="k">Equipe</span><h3>Scripts para a secretária</h3><p>Confirmação, falta, remarcação, retorno, cobrança e pedido de avaliação. É só copiar.</p></a>
+      <a class="tcard" href="/app/#/lgpd"><span class="k">Proteção</span><h3>Checklist LGPD</h3><p>O que precisa estar em ordem no consultório para proteger os dados dos pacientes.</p></a>
+    </div>
+    <div class="soon">
+      <div class="eyebrow">Chegando com IA</div>
+      <div class="soon-list"><span>Escriba de consulta</span><span>Auditor de glosas</span><span>Verificador CFM</span><span>Simulador para a secretária</span><span>PF ou PJ</span></div>
+    </div>
+    <div class="ctas" style="margin-top:40px"><a class="btn btn-p" href="/app/">Usar grátis agora <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></div>
+  </div>
+</section>
+
+<section id="app">
+  <div class="phbg" aria-hidden="true" style="--img:url(img/bgmet.jpg);--o1:0.88;--o2:0.95"></div>
+  <div class="wrap appw">
+    <div>
+      <div class="eyebrow">App</div>
+      <h2>Leve a AXIS Lab <em class="s">no bolso.</em></h2>
+      <p class="lede" style="margin-top:22px">Instale em 10 segundos, sem loja de aplicativos. O ícone fica na tela do celular, ao lado dos seus apps, e abre direto nas ferramentas.</p>
+      <button class="btn btn-p btn-xl" type="button" data-install style="margin-top:32px"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Baixar o app grátis</button>
+      <div class="osgrid">
+        <div><b>iPhone</b><p>No Safari, toque em Compartilhar e depois em “Adicionar à Tela de Início”.</p></div>
+        <div><b>Android</b><p>Toque em “Baixar o app grátis” e confirme em “Instalar”.</p></div>
+      </div>
+    </div>
+    <div class="qrbox">
+      <div id="qr" aria-label="QR code para abrir a AXIS Lab no celular" role="img"></div>
+      <p>Está no computador? Aponte a câmera do celular para abrir o app.</p>
+    </div>
+  </div>
+</section>
 
 
 <section id="servicos">
   <div class="phbg" aria-hidden="true" style="--img:url(img/bgserv.jpg);--o1:0.86;--o2:0.94"></div>
   <div class="wrap">
     <div class="head">
-      <div><div class="eyebrow">O que a AXIS faz</div><h2>Três frentes. <em class="s">Um só sistema.</em></h2></div>
+      <div><div class="eyebrow">Quer que a gente faça por você?</div><h2>A AXIS cuida do resto. <em class="s">Um só sistema.</em></h2></div>
       <p>A maioria dos consultórios tem um site de um fornecedor, o Instagram de outro e o atendimento no improviso. Na AXIS, a mesma equipe cuida das três frentes, para o paciente que encontra você conseguir marcar.</p>
     </div>
     <div class="pillars">
@@ -396,10 +490,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="phbg" aria-hidden="true" style="--img:url(img/bgfinal.jpg);--o1:0.86;--o2:0.94"></div>
   <div class="wrap">
     <div class="eyebrow">Próximo passo</div>
-    <h2 style="margin-top:20px">Seu paciente já está <em class="s">procurando.</em></h2>
-    <p>Comece pelo Raio-X digital: analisamos a sua presença hoje e mostramos o que falta para ele encontrar você.</p>
+    <h2 style="margin-top:20px">Comece pela <em class="s">plataforma.</em></h2>
+    <p>É grátis. Faça o Raio-X do consultório, descubra quanto cobrar e, se quiser ajuda, a AXIS faz por você.</p>
     <div class="ctas">
-      <a class="btn btn-p" href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Falar no Instagram <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a>
+      <button class="btn btn-p" type="button" data-install>Baixar o app grátis</button>
+      <a class="btn btn-g" href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Falar no Instagram <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a>
     </div>
     <p style="font-family:var(--mono);font-size:13px;margin-top:22px;color:var(--faint)">@axismed_marketing</p>
   </div>
@@ -413,6 +508,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <span>© 2026 AXIS</span>
   </div>
 </footer>
+
+<button class="btn btn-p mfab" type="button" data-install><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Baixar o app grátis</button>
+<dialog id="installDlg"><div class="dlg"><div class="eyebrow" style="color:#2f6b4c">Instalar o app</div><h3>Leve a AXIS Lab no celular</h3><div id="installSteps"></div><button class="btn" type="button" onclick="this.closest('dialog').close()">Entendi</button></div></dialog>
+<script src="/install.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>try{new QRCode(document.getElementById('qr'),{text:'https://axismed.app.br/app/?source=qr',width:216,height:216,colorDark:'#0F2A22',colorLight:'#F2EBDD'})}catch(e){}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));</script>
 
 </body>
 </html>

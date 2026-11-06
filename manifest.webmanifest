@@ -1,0 +1,16 @@
+{
+  "name": "AXIS Lab · Ferramentas para médicos",
+  "short_name": "AXIS Lab",
+  "description": "Ferramentas gratuitas para o consultório: quanto cobrar, convênios, documentos, raio-X, scripts e LGPD.",
+  "start_url": "/app/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0F2A22",
+  "theme_color": "#0F2A22",
+  "lang": "pt-BR",
+  "icons": [
+    {"src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
