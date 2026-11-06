@@ -32,8 +32,8 @@ function onboarding(mode){
   <div class="onb-l">
     <a class="brand" href="/lab/" aria-label="Voltar ao AXIS Lab"><svg width="30" height="34" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>LAB</span></a>
     <div>
-      <div class="eyebrow" style="color:var(--sage-2)">Grátis para médicos</div>
-      <h1>Ferramentas que organizam o seu <em>consultório.</em></h1>
+      <div class="eyebrow" style="color:var(--sage)">Grátis para médicos</div>
+      <h1>Ferramentas para o dia a dia do médico.</h1>
       <ul><li>Consulta com IA: grave e receba a evolução pronta</li><li>Documentos, calculadoras clínicas e novidades da sua área</li><li>Financeiro, glosas de convênio e marketing dentro do CFM</li><li>Secretária, jurídico e a sua vida fora do consultório</li></ul>
     </div>
     <p style="font-size:13px;color:rgba(242,235,221,.5)">Feito pela AXIS · marketing, IA e sistemas para médicos</p>
@@ -132,8 +132,8 @@ let CUR={tool:null,mod:null};
 function home(p){
   const first=(p.nome||'').replace(/^(dra?\.?\s*)/i,'').split(' ')[0];
   main.innerHTML=`<div class="wrap">
-  <section class="hello"><div class="eyebrow">AXIS Lab · ${esc(p.especialidade||'')}</div><h1 style="margin-top:8px">Olá, ${esc(first||'doutor(a)')}. <span class="serif">O que vamos resolver hoje?</span></h1></section>
-  <div class="tools">${TOOLS.map((t,i)=>`<a class="tool${i===0?' hero-tool':''}" href="#/${t.id}">${ic(t.ic)}<h3>${t.t}</h3><p>${t.d}</p><span class="tag">${t.mods.length>1?t.mods.length+' ferramentas →':'Abrir →'}</span></a>`).join('')}</div>
+  <section class="hello"><h1>Olá, ${esc(first||'doutor(a)')}.</h1><p>O que vamos resolver hoje?</p></section>
+  <div class="tools">${TOOLS.map((t,i)=>`<a class="tool${i===0?' hero-tool':''}" href="#/${t.id}">${ic(t.ic)}<h3>${t.t}</h3><p>${t.d}</p><span class="tag">${t.mods.length>1?t.mods.length+' ferramentas':'Abrir'}</span></a>`).join('')}</div>
   <div class="card" style="margin:20px 0 48px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--forest);color:var(--cream);border:0">
     <div style="max-width:560px"><div class="eyebrow" style="color:var(--sage-2)">Quer que a gente faça por você?</div><p style="margin-top:8px;font-size:17px">A AXIS cuida do site, do Google, do Instagram, dos anúncios e da secretária de IA do seu consultório.</p></div>
     <a class="btn" style="background:var(--cream);color:var(--forest)" href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Falar com a AXIS</a>
@@ -143,7 +143,7 @@ function home(p){
 function head(t,s){
   const tool=TOOLS.find(x=>x.id===CUR.tool);
   const tabs=tool&&tool.mods.length>1?`<nav class="mtabs" aria-label="${esc(tool.t)}">${tool.mods.map(([id,nm])=>`<a href="#/${tool.id}/${id}" class="${id===CUR.mod?'on':''}" ${id===CUR.mod?'aria-current="page"':''}>${nm}</a>`).join('')}</nav>`:'';
-  return `<div class="wrap"><div class="view-h noprint"><a class="back" href="#/">← Todas as ferramentas</a>${tool?`<div class="eyebrow">${esc(tool.t)}</div>`:''}${tabs}<h1>${t}</h1>${s?`<p class="muted" style="max-width:680px">${s}</p>`:''}</div>`;
+  return `<div class="wrap"><div class="view-h noprint"><a class="back" href="#/">‹ Todas as ferramentas</a>${tool?`<div class="eyebrow">${esc(tool.t)}</div>`:''}${tabs}<h1>${t}</h1>${s?`<p class="muted" style="max-width:680px">${s}</p>`:''}</div>`;
 }
 
 /* ---------- roteador ---------- */
