@@ -47,6 +47,12 @@ export async function onRequest({ request, env, params }) {
   }
 
   if (method !== 'POST') return J(405, { ok: false });
+  if (route === 'logout') {
+    const t = readCookie(request);
+    if (t) await db.prepare('DELETE FROM sessions WHERE token = ?').bind(t).run();
+    return J(200, { ok: true }, { 'set-cookie': cookie('', 0) });
+  }
+
   let b; try { b = await request.json(); } catch { return J(400, { ok: false, error: 'Dados inválidos.' }); }
   const email = clean(b.email, 160).toLowerCase();
   const senha = String(b.senha ?? '');
@@ -71,12 +77,6 @@ export async function onRequest({ request, env, params }) {
     const ok = u && same(await hash(senha, u.salt), u.pass);
     if (!ok) { await new Promise((r) => setTimeout(r, 400)); return J(401, { ok: false, error: 'E-mail ou senha incorretos.' }); }
     return J(200, { ok: true, user: pub(u) }, { 'set-cookie': await newSession(db, u.id) });
-  }
-
-  if (route === 'logout') {
-    const t = readCookie(request);
-    if (t) await db.prepare('DELETE FROM sessions WHERE token = ?').bind(t).run();
-    return J(200, { ok: true }, { 'set-cookie': cookie('', 0) });
   }
 
   return J(404, { ok: false });
