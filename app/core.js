@@ -34,7 +34,7 @@ function onboarding(mode){
     <div>
       <div class="eyebrow" style="color:var(--sage-2)">Grátis para médicos</div>
       <h1>Ferramentas que organizam o seu <em>consultório.</em></h1>
-      <ul><li>Quanto cobrar e quais convênios valem a pena</li><li>Documentos prontos em segundos</li><li>Raio-X de como o paciente encontra você</li><li>Scripts e checklist de LGPD para a equipe</li></ul>
+      <ul><li>Consulta com IA: grave e receba a evolução pronta</li><li>Documentos, calculadoras clínicas e novidades da sua área</li><li>Financeiro, glosas de convênio e marketing dentro do CFM</li><li>Secretária, jurídico e a sua vida fora do consultório</li></ul>
     </div>
     <p style="font-size:13px;color:rgba(242,235,221,.5)">Feito pela AXIS · marketing, IA e sistemas para médicos</p>
   </div>

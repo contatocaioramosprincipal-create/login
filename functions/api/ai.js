@@ -9,6 +9,7 @@ const c = (v, n = 6000) => String(v ?? '').trim().slice(0, n);
 const BASE = 'Você é o assistente da AXIS Lab para médicos brasileiros. Responda em português do Brasil, direto e prático, sem enrolação e sem repetir a pergunta. Use listas curtas e negrito só no essencial. Se não tiver certeza ou faltar informação, diga claramente "não sei" ou o que falta, nunca invente dados, doses, leis ou referências. A decisão final é sempre do médico.';
 
 const T = {
+  stt: {},
   consulta: {
     sys: 'Você transforma a transcrição de uma consulta médica em documentação. Use só o que foi dito; o que não foi dito, deixe como "não informado". Não invente exames, doses nem diagnósticos.',
     user: (b) => `Especialidade: ${c(b.especialidade, 80)}\nTranscrição da consulta:\n${c(b.texto, 14000)}\n\nEntregue, nesta ordem e com estes títulos:\n## Evolução (SOAP)\nS, O, A e P em tópicos curtos.\n## Orientações ao paciente\nLinguagem simples, em segunda pessoa, pronta para enviar.\n## Documentos sugeridos\nSó os que a conversa indica (atestado, pedido de exame, encaminhamento, receita), cada um com uma linha do que deve conter.\n## Pontos de atenção\nO que ficou em aberto ou precisa ser confirmado.`,
@@ -115,6 +116,17 @@ export async function onRequestPost({ request, env }) {
   let b; try { b = await request.json(); } catch { return J(400, { ok: false, error: 'Dados inválidos.' }); }
   const task = String(b.task || '');
   if (!T[task] || task === 'query') return J(400, { ok: false, error: 'Ferramenta desconhecida.' });
+  await db.prepare('CREATE TABLE IF NOT EXISTS ai_usage (user_id INTEGER, day TEXT, n INTEGER, PRIMARY KEY (user_id, day))').run();
+  if (task === 'stt') { // trecho de até ~30 s de áudio (WAV 16 kHz) -> texto
+    const a = String(b.audio || '').replace(/^data:[^,]+,/, '');
+    if (!a || a.length > 3e6) return J(413, { ok: false, error: 'Trecho de áudio inválido.' });
+    const k = 'stt:' + new Date().toISOString().slice(0, 10);
+    const r0 = await db.prepare('SELECT n FROM ai_usage WHERE user_id = ? AND day = ?').bind(u.id, k).first();
+    if (r0 && r0.n >= 400) return J(429, { ok: false, error: 'Limite diário de gravação atingido. Amanhã libera de novo.' });
+    await db.prepare('INSERT INTO ai_usage (user_id, day, n) VALUES (?, ?, 1) ON CONFLICT(user_id, day) DO UPDATE SET n = n + 1').bind(u.id, k).run();
+    try { const s = await env.AI.run(STT, { audio: a, language: 'pt' }); return J(200, { ok: true, text: (s?.text || '').trim() }); }
+    catch { return J(502, { ok: false, error: 'Não consegui transcrever agora. Tente de novo.' }); }
+  }
   b.especialidade = b.especialidade || u.especialidade; b.cidade = b.cidade || u.cidade;
 
   await db.prepare('CREATE TABLE IF NOT EXISTS ai_usage (user_id INTEGER, day TEXT, n INTEGER, PRIMARY KEY (user_id, day))').run();
@@ -129,7 +141,7 @@ export async function onRequestPost({ request, env }) {
     if (task === 'consulta' && b.audio) {
       const a = String(b.audio).replace(/^data:[^,]+,/, '');
       if (a.length > 25e6) return J(413, { ok: false, error: 'Áudio longo demais. Grave em partes de até 20 minutos.' });
-      const s = await env.AI.run(STT, { audio: a, language: 'pt', task: 'transcribe', vad_filter: true });
+      const s = await env.AI.run(STT, { audio: a, language: 'pt' });
       b.texto = (s?.text || '').trim();
       if (!b.texto) return J(422, { ok: false, error: 'Não consegui entender o áudio. Tente gravar mais perto do microfone.' });
       out.transcricao = b.texto;

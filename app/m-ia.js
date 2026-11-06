@@ -15,28 +15,52 @@ function aiPage(title,sub,fields,task,o={}){
 }
 
 /* ---------- 1. Consulta IA ---------- */
+/* áudio -> PCM 16 kHz mono -> trechos WAV de 30 s -> /api/ai (stt) em paralelo */
+async function toChunks(blob,sec=30){
+  const AC=window.AudioContext||window.webkitAudioContext;const ac=new AC();
+  const buf=await new Promise((ok,no)=>{blob.arrayBuffer().then(ab=>{const p=ac.decodeAudioData(ab,ok,no);if(p&&p.then)p.then(ok,no)},no)});
+  ac.close&&ac.close();
+  const n=Math.ceil(buf.duration*16000);const oc=new OfflineAudioContext(1,n,16000);const src=oc.createBufferSource();src.buffer=buf;src.connect(oc.destination);src.start();
+  const pcm=(await oc.startRendering()).getChannelData(0);const per=sec*16000,out=[];
+  for(let i=0;i<pcm.length;i+=per){const sl=pcm.subarray(i,i+per);if(sl.length<16000*0.8)break;out.push(wav(sl))}
+  return out;
+}
+function wav(f){const b=new ArrayBuffer(44+f.length*2),v=new DataView(b),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+  w(0,'RIFF');v.setUint32(4,36+f.length*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,16000,true);v.setUint32(28,32000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,f.length*2,true);
+  for(let i=0;i<f.length;i++){const x=Math.max(-1,Math.min(1,f[i]));v.setInt16(44+i*2,x<0?x*0x8000:x*0x7fff,true)}
+  let s='';const u=new Uint8Array(b);for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s)}
+async function transcribe(blob,onp){
+  const parts=await toChunks(blob);if(!parts.length)throw new Error('A gravação ficou curta demais.');
+  const res=new Array(parts.length);let done=0,next=0;
+  const worker=async()=>{while(next<parts.length){const i=next++;let t=2;while(t--){try{res[i]=(await ai('stt',{audio:parts[i]})).text;break}catch(e){if(!t)throw e}}onp(++done,parts.length)}};
+  await Promise.all([worker(),worker(),worker()]);
+  return res.filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+}
 window.mConsulta=p=>{
   let rec=null,chunks=[],t0=0,tick=null;
   aiPage('Consulta IA','Grave a consulta (com o consentimento do paciente) ou cole suas anotações. A IA devolve a evolução em SOAP, as orientações ao paciente e os documentos sugeridos. O áudio não é guardado.',
   `<div class="recbox"><button class="recbtn" type="button" id="recB" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span id="recL">Gravar consulta</span></button><div class="rect" id="recT">00:00</div></div>
-   <p class="hint" id="recS">Toque para gravar. Toque de novo para parar e gerar.</p>
-   ${ta('texto','Ou cole/dite a transcrição e suas anotações','Ex.: Paciente 54 anos, refere cefaleia há 2 semanas…',7)}`,
-  'consulta',{btn:'Gerar documentação',print:true,loading:'Transcrevendo e organizando a consulta…',
+   <p class="hint" id="recS">Toque para gravar. Toque de novo para parar: a transcrição aparece abaixo e a documentação é gerada.</p>
+   ${ta('texto','Transcrição e anotações (pode editar)','Ex.: Paciente 54 anos, refere cefaleia há 2 semanas…',7)}`,
+  'consulta',{btn:'Gerar documentação',print:true,loading:'Organizando a consulta…',
    hint:'Peça autorização ao paciente antes de gravar. Revise tudo antes de colar no prontuário.',
-   collect:async f=>{const v=vals(f);if(f._audio){v.audio=f._audio;f._audio=null}else if(!v.texto){toast('Grave ou escreva algo antes');return null}return v},
-   after:(j,out)=>{if(j.transcricao){const d=document.createElement('details');d.className='card';d.style.marginTop='12px';d.innerHTML=`<summary>Ver transcrição</summary><p style="white-space:pre-wrap;margin-top:10px">${esc(j.transcricao)}</p>`;out.append(d)}},
-   init:f=>{const B=$('#recB'),L=$('#recL'),T=$('#recT'),S=$('#recS');
+   collect:async f=>{const v=vals(f);if(!v.texto){toast('Grave ou escreva algo antes');return null}return v},
+   init:f=>{const B=$('#recB'),L=$('#recL'),T=$('#recT'),S=$('#recS'),X=$('#a-texto');
     if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){B.disabled=true;S.textContent='Este navegador não grava áudio. Use a caixa de texto (o teclado do celular tem ditado).';return}
     B.onclick=async()=>{
       if(rec&&rec.state==='recording'){rec.stop();return}
-      try{const st=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];
+      try{const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});chunks=[];
         const mt=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(m=>MediaRecorder.isTypeSupported?.(m))||'';
-        rec=new MediaRecorder(st,mt?{mimeType:mt,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
+        rec=new MediaRecorder(st,mt?{mimeType:mt}:undefined);
         rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);
-        rec.onstop=()=>{st.getTracks().forEach(x=>x.stop());clearInterval(tick);B.setAttribute('aria-pressed','false');L.textContent='Gravar de novo';
-          const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});const fr=new FileReader();fr.onload=()=>{f._audio=fr.result;S.textContent='Gravação pronta. Gerando…';f.requestSubmit()};fr.readAsDataURL(blob)};
+        rec.onstop=async()=>{st.getTracks().forEach(x=>x.stop());clearInterval(tick);B.setAttribute('aria-pressed','false');L.textContent='Gravar de novo';B.disabled=true;
+          S.textContent='Preparando o áudio…';
+          try{const txt=await transcribe(new Blob(chunks,{type:rec.mimeType||'audio/webm'}),(d,n)=>S.textContent=`Transcrevendo… ${Math.round(d/n*100)}%`);
+            if(!txt)throw new Error('Não consegui entender o áudio. Tente gravar mais perto do microfone.');
+            X.value=(X.value?X.value+'\n\n':'')+txt;S.textContent='Transcrição pronta. Gerando a documentação…';f.requestSubmit()}
+          catch(e){S.textContent=e.message||'Não consegui transcrever. Tente de novo.'}finally{B.disabled=false;chunks=[]}};
         rec.start(1000);t0=Date.now();B.setAttribute('aria-pressed','true');L.textContent='Parar e gerar';S.textContent='Gravando…';
-        tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);T.textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;if(s>=1200)rec.stop()},500);
+        tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);T.textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;if(s>=3600)rec.stop()},500);
       }catch{S.textContent='Sem acesso ao microfone. Libere a permissão no navegador.'}
     }}});
 };
