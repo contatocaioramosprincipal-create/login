@@ -1,3 +1,4 @@
+import { serverEvent } from '../t.js';
 // Contas da AXIS Lab: cadastro, login, sessão e saída. Banco: Cloudflare D1 (binding "DB").
 // Senha com PBKDF2-SHA256 (100 mil iterações + sal); sessão em cookie HttpOnly de 30 dias.
 const J = (status, body, headers = {}) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...headers } });
@@ -69,14 +70,18 @@ export async function onRequest({ request, env, params }) {
     const r = await db.prepare(`INSERT INTO users (email, pass, salt, nome, especialidade, crm, cidade, whatsapp, consent_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`)
       .bind(email, await hash(senha, salt), salt, p.nome, p.especialidade, p.crm, p.cidade, p.whatsapp).run();
     const id = r.meta.last_row_id;
-    return J(200, { ok: true, user: { email, ...p } }, { 'set-cookie': await newSession(db, id) });
+    const ck = await newSession(db, id);
+    await serverEvent(env, request, id, 'signup', { especialidade: p.especialidade, cidade: p.cidade });
+    return J(200, { ok: true, user: { email, ...p } }, { 'set-cookie': ck });
   }
 
   if (route === 'login') {
     const u = await db.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
     const ok = u && same(await hash(senha, u.salt), u.pass);
     if (!ok) { await new Promise((r) => setTimeout(r, 400)); return J(401, { ok: false, error: 'E-mail ou senha incorretos.' }); }
-    return J(200, { ok: true, user: pub(u) }, { 'set-cookie': await newSession(db, u.id) });
+    const ck = await newSession(db, u.id);
+    await serverEvent(env, request, u.id, 'login');
+    return J(200, { ok: true, user: pub(u) }, { 'set-cookie': ck });
   }
 
   return J(404, { ok: false });

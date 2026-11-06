@@ -80,7 +80,7 @@ function onboarding(mode){
         if(!$('#f-ok').checked)throw new Error('Marque a autorização para continuar.');
         f.consent=true;
       }
-      const u=await auth(mode,f);ls.set('axl_had_account',true);user=u;location.hash='#/';route();
+      const u=await auth(mode,f);ls.set('axl_had_account',true);const nx=new URLSearchParams(location.search).get('next');if(nx&&/^\/[a-z]/.test(nx)){location.href=nx;return}user=u;location.hash='#/';route();
     }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent=old}
   });
 }
@@ -153,6 +153,7 @@ async function route(){
   const fresh=main.cloneNode(false);main.replaceWith(fresh);main=fresh;
   if(user===undefined){main.innerHTML='<div class="wrap" style="padding:80px 0;color:var(--mute)">Carregando…</div>';user=await loadUser()}
   if(!user){onboarding();return}
+  {const nx=new URLSearchParams(location.search).get('next');if(nx&&/^\/[a-z]/.test(nx)){location.replace(nx);return}}
   $('#bar').hidden=false;$('#foot').hidden=false;
   const [tid,mid]=location.hash.replace(/^#\/?/,'').split('/');
   const tool=TOOLS.find(t=>t.id===tid);

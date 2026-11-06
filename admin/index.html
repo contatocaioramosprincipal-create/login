@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Relatórios · AXIS</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--forest:#0F2A22;--forest-2:#16382D;--cream:#F2EBDD;--paper:#FAF7F0;--sage:#7FB89A;--sage-d:#2F6B4C;--mist:#E4EFE8;--ink:#0F2A22;--text:#33463F;--mute:#5B6D66;--rule:#E3DDD0;--bar:#2F6B4C;--bar-soft:#BFD9C9;--bad:#B4432F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font:15.5px/1.5 'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{color:var(--ink);margin:0;letter-spacing:-.03em;line-height:1.1}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left))}
+header{background:var(--forest);color:var(--cream);position:sticky;top:0;z-index:5}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;height:66px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}.logo b{letter-spacing:.32em;font-size:14px}.logo span{color:var(--sage);font-weight:600;font-size:14px}
+.range{display:flex;gap:4px;background:rgba(242,235,221,.08);border-radius:999px;padding:4px}
+.range button{border:0;background:transparent;color:rgba(242,235,221,.75);font:600 14px var(--f,inherit);padding:8px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.range button[aria-pressed=true]{background:var(--cream);color:var(--forest)}
+main{padding:28px 0 60px}
+.top{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.top h1{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.top p{color:var(--mute)}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:16px 18px}
+.kpi small{display:block;color:var(--mute);font-size:13.5px;font-weight:500}
+.kpi b{display:block;font-size:30px;font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi i{font-style:normal;font-size:12.5px;color:var(--mute)}
+.kpi i.up{color:var(--sage-d)}.kpi i.down{color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:20px 22px;min-width:0}
+.card h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.card .sub{color:var(--mute);font-size:13.5px;margin-bottom:14px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}
+@media (max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}.c8,.c6,.c4{grid-column:span 12}}
+@media (max-width:560px){.kpis{grid-template-columns:1fr 1fr}.range button{padding:8px 10px}}
+/* gráfico de linha */
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:220px;overflow:visible}
+.chart .tip{position:absolute;pointer-events:none;background:var(--forest);color:var(--cream);font-size:13px;padding:8px 10px;border-radius:10px;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .1s}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--mute);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+/* barras horizontais */
+.hb{display:grid;gap:10px}
+.hb .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;font-size:14.5px}
+.hb .r span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb .r b{font-variant-numeric:tabular-nums;color:var(--ink)}
+.hb .t{grid-column:1/-1;height:8px;border-radius:4px;background:var(--mist)}
+.hb .t i{display:block;height:100%;border-radius:4px;background:var(--bar)}
+/* funil */
+.fn{display:grid;gap:8px}
+.fn .r{display:grid;grid-template-columns:128px 1fr 56px;gap:12px;align-items:center;font-size:14.5px}
+.fn .bar{height:30px;border-radius:6px;background:var(--mist);overflow:hidden}
+.fn .bar i{display:block;height:100%;background:var(--bar);border-radius:6px 4px 4px 6px}
+.fn .n{text-align:right;font-variant-numeric:tabular-nums}.fn .n b{color:var(--ink)}.fn .n small{display:block;color:var(--mute);font-size:12px}
+@media (max-width:560px){.fn .r{grid-template-columns:110px 1fr 70px;font-size:13px}}
+/* tabelas */
+.tw{overflow-x:auto;margin:0 -4px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--mute);font-size:12.5px;padding:8px 6px;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:9px 6px;border-bottom:1px solid #F0EBE1;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;background:var(--mist);color:var(--sage-d);border-radius:999px;padding:2px 9px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border-radius:999px;border:1px solid var(--rule);background:#fff;font:600 14px inherit;text-decoration:none;cursor:pointer;color:var(--ink)}
+.empty{color:var(--mute);font-size:14px;padding:10px 0}
+.gate{max-width:460px;margin:80px auto;text-align:center;display:grid;gap:14px}
+.gate .btn{justify-self:center;background:var(--forest);color:var(--cream);border:0;min-height:48px;padding:12px 24px}
+.wa{color:var(--sage-d);font-weight:600;text-decoration:none}
+:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/"><svg width="22" height="25" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>Relatórios</span></a>
+  <div class="range" role="group" aria-label="Período">
+    <button type="button" data-d="1">Hoje</button><button type="button" data-d="7">7 dias</button><button type="button" data-d="30" aria-pressed="true">30 dias</button><button type="button" data-d="90">90 dias</button>
+  </div>
+</div></header>
+<main><div class="wrap" id="root"><p class="empty">Carregando…</p></div></main>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const N=n=>(+n||0).toLocaleString('pt-BR');
+const pct=(a,b)=>b?Math.round(a/b*100)+'%':'—';
+const TOOL={consulta:'Consulta IA',documentos:'Documentos',calc:'Calculadoras',radar:'Radar Médico',financeiro:'Financeiro',auditor:'Auditor de Convênios',estudio:'Estúdio de Marketing',secretaria:'Secretária',juridico:'Jurídico',vida:'Vida do Médico'};
+const TASK={consulta:'Consulta (documentação)',stt:'Transcrição de áudio (trechos)',doc:'Documento com IA',radar:'Radar (PubMed)',artigo:'Resumo de artigo',revisao:'Revisão para prova',glosas:'Glosas',posts:'Ideias de posts',cfm:'Verificador CFM',aval:'Resposta a avaliação',treino:'Treino da secretária',msg:'Mensagem difícil',posso:'Posso fazer isso?',cardapio:'Cardápio',fisico:'Treino físico'};
+const EV={view:'Abriu página',tool:'Abriu ferramenta',click:'Clicou',install_click:'Tocou em instalar',app_installed:'Instalou o app',app_open:'Abriu o app instalado',signup:'Criou conta',login:'Entrou',ai:'Usou IA'};
+const PAGE=p=>String(p||'').startsWith('/app')?'Plataforma (app)':({'/':'Site (início)','/lab/':'Página do Lab','/admin/':'Relatórios'}[p]||p);
+const SRC=s=>({direto:'Direto / sem origem',instagram:'Instagram',google:'Google',facebook:'Facebook',whatsapp:'WhatsApp',qr:'QR code'}[s]||s);
+const SEC={servicos:'O que fazemos',metodo:'Como funciona',quem:'Quem conduz',cfm:'CFM',contato:'Contato',ferramentas:'Ferramentas',app:'Instalar'};
+let days=30;
+
+function bars(rows,k,v,fmt=x=>esc(x)){if(!rows.length)return '<p class="empty">Sem dados no período.</p>';const m=Math.max(...rows.map(r=>+r[v]||0),1);
+  return `<div class="hb">${rows.map(r=>`<div class="r"><span title="${esc(fmt(r[k]))}">${fmt(r[k])}</span><b>${N(r[v])}</b><div class="t"><i style="width:${(+r[v]||0)/m*100}%"></i></div></div>`).join('')}</div>`}
+function table(cols,rows){if(!rows.length)return '<p class="empty">Sem dados no período.</p>';
+  return `<div class="tw"><table><thead><tr>${cols.map(c=>`<th class="${c.n?'n':''}">${c.h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td class="${c.n?'n':''}">${c.f?c.f(r):esc(r[c.k])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+function fillDays(daily){const out=[],map=Object.fromEntries(daily.map(d=>[d.day,d]));for(let i=days-1;i>=0;i--){const d=new Date(Date.now()-i*864e5).toISOString().slice(0,10);out.push(map[d]||{day:d,visitors:0,views:0,signups:0,active:0})}return out}
+function line(daily){
+  const D=fillDays(daily),W=1000,H=220,P={l:36,r:10,t:12,b:26},m=Math.max(4,...D.map(d=>+d.visitors));
+  const x=i=>P.l+(D.length<2?0:i*(W-P.l-P.r)/(D.length-1)),y=v=>H-P.b-(v/m)*(H-P.t-P.b);
+  const path=D.map((d,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(+d.visitors).toFixed(1)}`).join('');
+  const ticks=[0,Math.round(m/2),m];
+  const lbl=D.length<=10?D.map((d,i)=>i):[0,Math.floor(D.length/2),D.length-1];
+  const fd=s=>new Date(s+'T12:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Visitantes por dia">
+   ${ticks.map(t=>`<line x1="${P.l}" x2="${W-P.r}" y1="${y(t)}" y2="${y(t)}" stroke="#ECE6DA" stroke-width="1"/><text x="${P.l-8}" y="${y(t)+4}" text-anchor="end" font-size="12" fill="#5B6D66">${t}</text>`).join('')}
+   <path d="${path} L${x(D.length-1)},${H-P.b} L${x(0)},${H-P.b}Z" fill="#7FB89A" opacity=".18"/>
+   <path d="${path}" fill="none" stroke="#2F6B4C" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+   ${D.map((d,i)=>+d.signups?`<circle cx="${x(i)}" cy="${y(+d.visitors)}" r="5" fill="#0F2A22" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>`:'').join('')}
+   ${lbl.map(i=>`<text x="${x(i)}" y="${H-6}" text-anchor="${i===0?'start':i===D.length-1?'end':'middle'}" font-size="12" fill="#5B6D66">${fd(D[i].day)}</text>`).join('')}
+   <line id="xh" x1="0" x2="0" y1="${P.t}" y2="${H-P.b}" stroke="#0F2A22" stroke-width="1" opacity="0" vector-effect="non-scaling-stroke"/>
+   <rect x="${P.l}" y="0" width="${W-P.l-P.r}" height="${H}" fill="transparent" id="hit"/>
+  </svg><div class="tip" id="tip"></div></div>
+  <div class="legend"><span><i style="background:#2F6B4C"></i>Visitantes únicos</span><span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#0F2A22"/></svg>Dia com cadastro</span></div>`;
+}
+function bindLine(daily){const D=fillDays(daily),svg=$('.chart svg'),tip=$('#tip'),xh=$('#xh');if(!svg)return;
+  const move=ev=>{const r=svg.getBoundingClientRect();const px=((ev.touches?ev.touches[0].clientX:ev.clientX)-r.left)/r.width*1000;const i=Math.max(0,Math.min(D.length-1,Math.round((px-36)/((1000-46)/Math.max(1,D.length-1)))));
+    const d=D[i];const X=36+(D.length<2?0:i*(1000-46)/(D.length-1));xh.setAttribute('x1',X);xh.setAttribute('x2',X);xh.setAttribute('opacity','.35');
+    tip.innerHTML=`<b>${new Date(d.day+'T12:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})}</b><br>${N(d.visitors)} visitantes · ${N(d.views)} páginas<br>${N(d.signups)} cadastros · ${N(d.active)} médicos ativos`;
+    tip.style.left=(X/1000*r.width)+'px';tip.style.top='40px';tip.style.opacity=1};
+  const out=()=>{tip.style.opacity=0;xh.setAttribute('opacity',0)};
+  svg.addEventListener('mousemove',move);svg.addEventListener('touchstart',move,{passive:true});svg.addEventListener('mouseleave',out)}
+function delta(a,b){if(!b)return '<i>sem período anterior</i>';const d=Math.round((a-b)/b*100);return `<i class="${d>=0?'up':'down'}">${d>=0?'▲':'▼'} ${Math.abs(d)}% vs. período anterior</i>`}
+
+async function load(){
+  const root=$('#root');
+  let r;try{r=await fetch('/api/admin/report?days='+days,{credentials:'same-origin'})}catch{root.innerHTML='<p class="empty">Sem conexão.</p>';return}
+  if(r.status===401){root.innerHTML='<div class="gate"><h1>Entre para ver os relatórios</h1><p>Use a sua conta da plataforma (caioramos.comercial@gmail.com).</p><a class="btn" href="/app/?next=/admin/">Entrar na plataforma</a></div>';return}
+  if(r.status===403){root.innerHTML='<div class="gate"><h1>Sem acesso</h1><p>Esta conta não tem permissão para ver os relatórios.</p></div>';return}
+  const j=await r.json();const k=j.kpi,f=j.funnel;
+  const periodo=days===1?'hoje':`nos últimos ${days} dias`;
+  root.innerHTML=`
+  <div class="top"><div><h1>Atividade no site e na plataforma</h1><p>Dados ${periodo}. Atualizado agora.</p></div><a class="btn" href="/api/admin/report?csv=users">Baixar médicos cadastrados (CSV)</a></div>
+  <div class="kpis">
+    <div class="kpi"><small>Visitantes únicos</small><b>${N(k.visitors)}</b>${delta(k.visitors,j.kpiPrev.visitors)}</div>
+    <div class="kpi"><small>Páginas vistas</small><b>${N(k.views)}</b>${delta(k.views,j.kpiPrev.views)}</div>
+    <div class="kpi"><small>Novos cadastros</small><b>${N(j.totals.new_users)}</b><i>${N(j.totals.users)} no total</i></div>
+    <div class="kpi"><small>Médicos ativos</small><b>${N(f.used_tool)}</b><i>abriram alguma ferramenta</i></div>
+    <div class="kpi"><small>Cliques para contato</small><b>${N(k.contact_clicks)}</b><i>Instagram e WhatsApp</i></div>
+    <div class="kpi"><small>Toques em instalar</small><b>${N(k.install_clicks)}</b><i>${N(k.installs)} instalações confirmadas</i></div>
+  </div>
+  <div class="grid">
+    <section class="card c8"><h2>Visitantes por dia</h2><p class="sub">Passe o dedo ou o mouse para ver os números de cada dia.</p>${line(j.daily)}</section>
+    <section class="card c4"><h2>Do clique ao uso</h2><p class="sub">Pessoas em cada etapa ${periodo}.</p>
+      <div class="fn">${[['Visitaram',f.total],['Viram o site',f.site],['Viram o Lab',f.lab],['Abriram o app',f.app],['Criaram conta',f.signups],['Usaram ferramenta',f.used_tool],['Usaram IA',f.used_ai]].map(([l,v])=>`<div class="r"><span>${l}</span><div class="bar"><i style="width:${f.total?(v/f.total*100):0}%"></i></div><div class="n"><b>${N(v)}</b><small>${pct(v,f.total)}</small></div></div>`).join('')}</div></section>
+
+    <section class="card c4"><h2>De onde vieram</h2><p class="sub">Visitantes únicos por origem.</p>${bars(j.sources,'src','visitors',s=>esc(SRC(s)))}</section>
+    <section class="card c4"><h2>Páginas</h2><p class="sub">Visualizações.</p>${bars(j.pages,'page','views',p=>esc(PAGE(p)))}</section>
+    <section class="card c4"><h2>Cidades</h2><p class="sub">Aproximado, pela rede de quem acessa.</p>${bars(j.cities,'city','n',(c)=>esc(c||'Não identificada'))}</section>
+
+    <section class="card c6"><h2>Ferramentas mais usadas</h2><p class="sub">Aberturas na plataforma.</p>${table([{h:'Ferramenta',f:r=>`${esc(TOOL[r.tool]||r.tool)}${r.mod?` <span class="pill">${esc(r.mod)}</span>`:''}`},{h:'Aberturas',k:'opens',n:1},{h:'Pessoas',k:'people',n:1}],j.tools)}</section>
+    <section class="card c6"><h2>Uso de IA</h2><p class="sub">Gerações por ferramenta. Erros mostram se algo precisa de ajuste.</p>${table([{h:'Tarefa',f:r=>esc(TASK[r.task]||r.task)},{h:'Feitas',k:'ok',n:1},{h:'Erros',f:r=>+r.err?`<b style="color:var(--bad)">${N(r.err)}</b>`:'0',n:1},{h:'Médicos',k:'people',n:1},{h:'Tempo médio',f:r=>r.avg_s?String(r.avg_s).replace('.',',')+' s':'—',n:1}],j.ai)}</section>
+
+    <section class="card c6"><h2>Cliques em botões</h2><p class="sub">O que as pessoas mais clicam.</p>${table([{h:'Botão',f:r=>esc(r.label||'—')},{h:'Página',f:r=>esc(PAGE(r.path))},{h:'Cliques',k:'n',n:1},{h:'Pessoas',k:'people',n:1}],j.clicks)}</section>
+    <section class="card c6"><h2>Até onde leem o site</h2><p class="sub">Pessoas que chegaram a cada ponto da página e seções vistas.</p>
+      ${table([{h:'Página',f:r=>esc(PAGE(r.path))},{h:'Rolagem',f:r=>r.pct+'%'},{h:'Pessoas',k:'n',n:1}],j.scroll)}
+      <div style="margin-top:14px">${table([{h:'Seção vista',f:r=>`${esc(SEC[r.id]||r.id)} <span class="pill">${esc(PAGE(r.path))}</span>`},{h:'Pessoas',k:'n',n:1}],j.sections)}</div></section>
+
+    <section class="card c4"><h2>Aparelhos</h2>${bars(j.devices,'k','n')}</section>
+    <section class="card c4"><h2>Navegadores</h2>${bars(j.browsers,'k','n')}</section>
+    <section class="card c4"><h2>Tempo médio na página</h2>${table([{h:'Página',f:r=>esc(PAGE(r.page))},{h:'Tempo',f:r=>{const s=+r.avg_sec||0;return s>=60?Math.floor(s/60)+' min '+(s%60)+' s':s+' s'},n:1},{h:'Visitas',k:'n',n:1}],j.timeOn)}</section>
+
+    ${j.campaigns.length?`<section class="card c12"><h2>Campanhas (links com UTM)</h2>${table([{h:'Origem',f:r=>esc(SRC(r.src))},{h:'Mídia',k:'medium'},{h:'Campanha',k:'campaign'},{h:'Visitantes',k:'visitors',n:1}],j.campaigns)}</section>`:''}
+
+    <section class="card c12"><h2>Médicos cadastrados</h2><p class="sub">${N(j.totals.users)} contas. Toque no WhatsApp para abrir a conversa.</p>
+      ${table([{h:'Cadastro',f:r=>esc((r.created_at||'').slice(0,10).split('-').reverse().join('/'))},{h:'Nome',f:r=>`<b>${esc(r.nome)}</b><br><small style="color:var(--mute)">${esc(r.email)}</small>`},{h:'Especialidade',k:'especialidade'},{h:'Cidade',k:'cidade'},{h:'WhatsApp',f:r=>r.whatsapp?`<a class="wa" href="https://wa.me/55${esc(String(r.whatsapp).replace(/\D/g,'').replace(/^55(?=\d{10,11}$)/,''))}" target="_blank" rel="noopener">${esc(r.whatsapp)}</a>`:'—'},{h:'Veio de',f:r=>esc(SRC(r.source||'—'))},{h:'Ferramentas',k:'tools',n:1},{h:'IA',k:'ai',n:1},{h:'Mais usou',f:r=>esc(TOOL[r.top_tool]||'—')},{h:'Último acesso',f:r=>r.last_seen?new Date(r.last_seen.replace(' ','T')+(r.last_seen.includes('Z')?'':'Z')).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'}],j.users)}</section>
+
+    <section class="card c12"><h2>Atividade recente</h2><p class="sub">Últimos acontecimentos, do mais novo para o mais antigo.</p>
+      ${table([{h:'Quando',f:r=>new Date(r.ts).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})},{h:'Quem',f:r=>r.nome?`<b>${esc(r.nome)}</b>`:'Visitante'},{h:'O quê',f:r=>{let p={};try{p=JSON.parse(r.props||'{}')}catch{};const ex=r.e==='tool'?TOOL[p.tool]||p.tool:r.e==='ai'?(TASK[p.task]||p.task)+(p.ok===0?' (erro)':''):r.e==='click'||r.e==='install_click'?p.label:r.e==='view'?PAGE(r.path.startsWith('/app')?'/app':r.path):r.e==='signup'?p.especialidade:'';return `${esc(EV[r.e]||r.e)}${ex?` <span class="pill">${esc(ex)}</span>`:''}`}},{h:'Origem',f:r=>esc(r.src?SRC(r.src):'')},{h:'Aparelho',k:'device'},{h:'Cidade',k:'city'}],j.recent)}</section>
+
+    ${j.leads.length?`<section class="card c12"><h2>Formulários enviados</h2>${table(Object.keys(j.leads[0]).filter(x=>!['id'].includes(x)).slice(0,8).map(x=>({h:x,f:r=>esc(r[x])})),j.leads)}</section>`:''}
+  </div>`;
+  bindLine(j.daily);
+}
+document.querySelectorAll('.range button').forEach(b=>b.onclick=()=>{days=+b.dataset.d;document.querySelectorAll('.range button').forEach(x=>x.setAttribute('aria-pressed',x===b));load()});
+load();
+</script>
+</body>
+</html>

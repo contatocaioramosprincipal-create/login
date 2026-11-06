@@ -1,3 +1,4 @@
+import { serverEvent } from './t.js';
 // IA da AXIS Lab: Cloudflare Workers AI (binding "AI"). Exige login. Limite diário por usuário (D1).
 // Nada do que o médico envia é guardado: só contamos o uso.
 const J = (s, b) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
@@ -124,7 +125,7 @@ export async function onRequestPost({ request, env }) {
     const r0 = await db.prepare('SELECT n FROM ai_usage WHERE user_id = ? AND day = ?').bind(u.id, k).first();
     if (r0 && r0.n >= 400) return J(429, { ok: false, error: 'Limite diário de gravação atingido. Amanhã libera de novo.' });
     await db.prepare('INSERT INTO ai_usage (user_id, day, n) VALUES (?, ?, 1) ON CONFLICT(user_id, day) DO UPDATE SET n = n + 1').bind(u.id, k).run();
-    try { const s = await env.AI.run(STT, { audio: a, language: 'pt' }); return J(200, { ok: true, text: (s?.text || '').trim() }); }
+    try { const s = await env.AI.run(STT, { audio: a, language: 'pt' }); await serverEvent(env, request, u.id, 'ai', { task: 'stt', ok: 1 }); return J(200, { ok: true, text: (s?.text || '').trim() }); }
     catch { return J(502, { ok: false, error: 'Não consegui transcrever agora. Tente de novo.' }); }
   }
   b.especialidade = b.especialidade || u.especialidade; b.cidade = b.cidade || u.cidade;
@@ -135,6 +136,7 @@ export async function onRequestPost({ request, env }) {
   if (row && row.n >= LIMIT) return J(429, { ok: false, error: `Você usou as ${LIMIT} gerações de hoje. Amanhã libera de novo.` });
   await db.prepare('INSERT INTO ai_usage (user_id, day, n) VALUES (?, ?, 1) ON CONFLICT(user_id, day) DO UPDATE SET n = n + 1').bind(u.id, day).run();
 
+  const t0 = Date.now();
   try {
     const def = T[task];
     const out = { ok: true };
@@ -162,8 +164,10 @@ export async function onRequestPost({ request, env }) {
     }
     if (!text) throw new Error('vazio');
     out.text = text;
+    await serverEvent(env, request, u.id, 'ai', { task, ok: 1, ms: Date.now() - t0 });
     return J(200, out);
   } catch (e) {
+    await serverEvent(env, request, u.id, 'ai', { task, ok: 0 });
     return J(502, { ok: false, error: 'A IA não respondeu agora. Tente de novo em instantes.' });
   }
 }
