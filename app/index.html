@@ -73,6 +73,7 @@ textarea{min-height:110px;resize:vertical}
 .onb-l li::before{content:"";width:16px;height:1px;background:var(--sage);transform:translateY(-4px);flex:none}
 .onb-r{background:var(--paper);padding:56px max(24px,5vw);display:flex;align-items:center}
 .onb-r form{width:100%;max-width:480px;margin:0 auto;display:grid;gap:16px}
+.pw{position:relative}.pw input{padding-right:92px}.eye{position:absolute;right:6px;top:50%;translate:0 -50%;min-height:36px;padding:6px 12px;border:0;border-radius:999px;background:#efe9dd;font-size:13px;cursor:pointer}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--mute)}
 .consent input{width:20px;min-height:20px;height:20px;margin-top:2px;flex:none}
 
@@ -267,12 +268,15 @@ const SOON=[
  {id:'pfpj',ic:'calc',t:'PF ou PJ: quanto você pagaria',d:'Compare carnê-leão e empresa com os seus números.'}
 ];
 
-/* ---------- onboarding ---------- */
-function onboarding(){
+/* ---------- login / cadastro ---------- */
+async function auth(path,body){const r=await fetch('/api/auth/'+path,{method:'POST',headers:{'content-type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)});let j={};try{j=await r.json()}catch{}if(!r.ok||!j.ok)throw new Error(j.error||'Não foi possível agora. Tente de novo.');return j.user}
+function onboarding(mode){
+  mode=mode||(ls.get('axl_had_account',false)?'login':'signup');
   $('#bar').hidden=true;$('#foot').hidden=true;
+  const pw=(id,ac)=>`<div class="pw"><input id="${id}" name="senha" type="password" required autocomplete="${ac}" minlength="8" placeholder="Mínimo 8 caracteres"><button type="button" class="eye" aria-label="Mostrar senha" data-eye="${id}">Mostrar</button></div>`;
   main.innerHTML=`<div class="onb">
   <div class="onb-l">
-    <a class="brand" href="/" aria-label="Voltar ao site da AXIS"><svg width="30" height="34" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>LAB</span></a>
+    <a class="brand" href="/lab/" aria-label="Voltar ao AXIS Lab"><svg width="30" height="34" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>LAB</span></a>
     <div>
       <div class="eyebrow" style="color:var(--sage-2)">Grátis para médicos</div>
       <h1>Ferramentas que organizam o seu <em>consultório.</em></h1>
@@ -280,32 +284,50 @@ function onboarding(){
     </div>
     <p style="font-size:13px;color:rgba(242,235,221,.5)">Feito pela AXIS · marketing, IA e sistemas para médicos</p>
   </div>
-  <div class="onb-r"><form id="onbF" novalidate>
-    <div><div class="eyebrow">Criar acesso</div><h2 style="font-size:28px;margin-top:8px">Leva 30 segundos.</h2></div>
-    <div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" name="nome" required autocomplete="name" placeholder="Dra. Ana Souza"></div>
-    <div class="grid2">
-      <div class="field"><label for="f-esp">Especialidade</label><input id="f-esp" name="especialidade" required placeholder="Dermatologia" list="esps"></div>
-      <div class="field"><label for="f-crm">CRM / UF <span style="font-weight:400">(opcional)</span></label><input id="f-crm" name="crm" placeholder="123456/SP"></div>
+  <div class="onb-r"><div style="width:100%;max-width:480px;margin:0 auto">
+    <div class="tabs" role="tablist" aria-label="Acesso">
+      <button class="opt" type="button" role="tab" data-mode="login" aria-pressed="${mode==='login'}">Entrar</button>
+      <button class="opt" type="button" role="tab" data-mode="signup" aria-pressed="${mode==='signup'}">Criar conta</button>
     </div>
-    <div class="grid2">
-      <div class="field"><label for="f-cid">Cidade / UF</label><input id="f-cid" name="cidade" required placeholder="Sorocaba/SP"></div>
-      <div class="field"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(15) 99999-9999"></div>
-    </div>
-    <div class="field"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
-    <label class="consent"><input type="checkbox" id="f-ok" required> <span>Concordo que a AXIS guarde estes dados para liberar o acesso e entrar em contato comigo. Nada de dados de pacientes é guardado nas ferramentas.</span></label>
-    <p class="hint" id="onbErr" role="alert" style="color:var(--red)"></p>
-    <button class="btn" type="submit">Entrar na plataforma</button>
-  </form></div></div>
+    ${mode==='login'?`<form id="authF" novalidate style="display:grid;gap:16px">
+      <div><h2 style="font-size:28px">Bem-vindo(a) de volta.</h2></div>
+      <div class="field"><label for="l-mail">E-mail</label><input id="l-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
+      <div class="field"><label for="l-pw">Senha</label>${pw('l-pw','current-password')}</div>
+      <p class="hint" id="authErr" role="alert" style="color:var(--red)"></p>
+      <button class="btn" type="submit">Entrar</button>
+      <p class="hint">Esqueceu a senha? Fale com a AXIS no <a href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Instagram</a> que liberamos um novo acesso.</p>
+    </form>`:`<form id="authF" novalidate style="display:grid;gap:16px">
+      <div><h2 style="font-size:28px">Crie seu acesso grátis.</h2><p class="muted" style="margin-top:4px">Leva 30 segundos.</p></div>
+      <div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" name="nome" required autocomplete="name" placeholder="Dra. Ana Souza"></div>
+      <div class="grid2">
+        <div class="field"><label for="f-esp">Especialidade</label><input id="f-esp" name="especialidade" required placeholder="Dermatologia" list="esps"></div>
+        <div class="field"><label for="f-crm">CRM / UF <span style="font-weight:400">(opcional)</span></label><input id="f-crm" name="crm" placeholder="123456/SP"></div>
+        <div class="field"><label for="f-cid">Cidade / UF</label><input id="f-cid" name="cidade" required placeholder="Sorocaba/SP"></div>
+        <div class="field"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(15) 99999-9999"></div>
+      </div>
+      <div class="field"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
+      <div class="field"><label for="f-pw">Crie uma senha</label>${pw('f-pw','new-password')}</div>
+      <label class="consent"><input type="checkbox" id="f-ok" name="consent"> <span>Concordo que a AXIS guarde estes dados para liberar o acesso e entrar em contato comigo. Nada de dados de pacientes é guardado nas ferramentas.</span></label>
+      <p class="hint" id="authErr" role="alert" style="color:var(--red)"></p>
+      <button class="btn" type="submit">Criar conta e entrar</button>
+    </form>`}
+  </div></div></div>
   <datalist id="esps">${['Clínica médica','Dermatologia','Pediatria','Ginecologia e obstetrícia','Urologia','Cardiologia','Ortopedia','Psiquiatria','Endocrinologia','Oftalmologia','Otorrinolaringologia','Neurologia','Gastroenterologia','Medicina do trabalho','Perícia médica','Cirurgia plástica','Nutrologia'].map(e=>`<option value="${e}">`).join('')}</datalist>`;
-  $('#onbF').addEventListener('submit',e=>{
-    e.preventDefault();const f=new FormData(e.target);const p=Object.fromEntries(f.entries());
-    const err=$('#onbErr');
-    if(!p.nome||!p.especialidade||!p.cidade||!p.whatsapp||!p.email){err.textContent='Preencha nome, especialidade, cidade, WhatsApp e e-mail.';return}
-    if(!/^\S+@\S+\.\S+$/.test(p.email)){err.textContent='Confira o e-mail.';return}
-    if(String(p.whatsapp).replace(/\D/g,'').length<10){err.textContent='Confira o WhatsApp com DDD.';return}
-    if(!$('#f-ok').checked){err.textContent='Marque a autorização para continuar.';return}
-    p.criado=new Date().toISOString();ls.set('axl_profile',p);api({type:'cadastro',...p});
-    location.hash='#/';route();
+  main.addEventListener('click',e=>{const t=e.target.closest('[data-mode]');if(t){onboarding(t.dataset.mode)}
+    const eye=e.target.closest('[data-eye]');if(eye){const i=$('#'+eye.dataset.eye);const sh=i.type==='password';i.type=sh?'text':'password';eye.textContent=sh?'Ocultar':'Mostrar'}});
+  $('#authF').addEventListener('submit',async e=>{
+    e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());const err=$('#authErr');err.textContent='';
+    const btn=e.target.querySelector('[type=submit]');btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
+    try{
+      if(mode==='signup'){
+        if(!f.nome||!f.especialidade||!f.cidade||!f.whatsapp||!f.email)throw new Error('Preencha nome, especialidade, cidade, WhatsApp e e-mail.');
+        if(String(f.whatsapp).replace(/\D/g,'').length<10)throw new Error('Confira o WhatsApp com DDD.');
+        if(String(f.senha||'').length<8)throw new Error('A senha precisa ter pelo menos 8 caracteres.');
+        if(!$('#f-ok').checked)throw new Error('Marque a autorização para continuar.');
+        f.consent=true;
+      }
+      const u=await auth(mode,f);ls.set('axl_had_account',true);user=u;location.hash='#/';route();
+    }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent=old}
   });
 }
 
@@ -539,17 +561,19 @@ function lgpd(){
 
 /* ---------- router ---------- */
 const VIEWS={cobrar,convenios,documentos,raiox,scripts,lgpd};
-function route(){
-  const p=ls.get('axl_profile',null);
+let user;
+async function loadUser(){try{const r=await fetch('/api/auth/me',{credentials:'same-origin'});const j=await r.json();return j.user||null}catch{return null}}
+async function route(){
   const fresh=main.cloneNode(false);main.replaceWith(fresh);main=fresh;
-  if(!p){onboarding();return}
+  if(user===undefined){main.innerHTML='<div class="wrap" style="padding:80px 0;color:var(--mute)">Carregando…</div>';user=await loadUser()}
+  if(!user){onboarding();return}
   $('#bar').hidden=false;$('#foot').hidden=false;
   const k=location.hash.replace(/^#\/?/,'');
-  (VIEWS[k]||home)(p);scrollTo(0,0);
+  (VIEWS[k]||home)(user);scrollTo(0,0);
   document.title=(k&&VIEWS[k]?TOOLS.find(t=>t.id===k).t+' · ':'')+'AXIS Lab';
 }
-$('#logout').addEventListener('click',()=>{ls.del('axl_profile');location.hash='';route()});
-addEventListener('hashchange',route);
+$('#logout').addEventListener('click',async()=>{try{await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin'})}catch{}user=null;location.hash='';route()});
+addEventListener('hashchange',()=>route());
 route();
 })();
 </script>
