@@ -20,9 +20,9 @@ const T = {
     max: 900,
   },
   query: {
-    sys: 'Você monta buscas para o PubMed. Responda só com a busca, em inglês, sem aspas extras nem explicação.',
-    user: (b) => `Monte uma busca PubMed curta (termos MeSH quando possível) para: especialidade "${c(b.especialidade, 80)}"${b.tema ? `, tema "${c(b.tema, 200)}"` : ''}. Prefira ensaios clínicos, revisões sistemáticas e diretrizes.`,
-    max: 80,
+    sys: 'Você traduz temas médicos para termos de busca do PubMed. Responda só com 1 a 4 termos em inglês, separados por " AND ", sem tags, aspas, parênteses nem explicação. Exemplo: heart failure AND SGLT2 inhibitors',
+    user: (b) => `Tema: ${c(b.tema, 200) || c(b.especialidade, 80)}${b.tema ? ` (especialidade: ${c(b.especialidade, 80)})` : ''}`,
+    max: 40,
   },
   radar: {
     sys: 'Você resume literatura médica recente para um médico ocupado. Use só os resumos fornecidos; não acrescente estudos.',
@@ -95,9 +95,10 @@ async function llm(env, sys, msgs, max) {
 
 async function pubmed(term) {
   const E = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
-  const q = encodeURIComponent(`(${term}) AND ("last 90 days"[dp])`);
-  const s = await fetch(`${E}esearch.fcgi?db=pubmed&retmode=json&retmax=6&sort=relevance&term=${q}&tool=axislab`).then((r) => r.json());
-  const ids = s?.esearchresult?.idlist || [];
+  const search = async (q) => (await fetch(`${E}esearch.fcgi?db=pubmed&retmode=json&retmax=6&sort=relevance&term=${encodeURIComponent(q)}&tool=axislab`).then((r) => r.json()))?.esearchresult?.idlist || [];
+  const recent = ` AND ("last 90 days"[dp]) AND hasabstract`;
+  let ids = await search(`(${term}) AND (randomized controlled trial[pt] OR meta-analysis[pt] OR systematic review[pt] OR guideline[pt])` + recent);
+  if (ids.length < 3) ids = [...new Set([...ids, ...await search(`(${term})` + recent)])].slice(0, 6);
   if (!ids.length) return { ids, text: '' };
   const text = await fetch(`${E}efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=${ids.join(',')}&tool=axislab`).then((r) => r.text());
   return { ids, text };
@@ -134,7 +135,7 @@ export async function onRequestPost({ request, env }) {
       out.transcricao = b.texto;
     }
     if (task === 'radar') {
-      const term = (await llm(env, T.query.sys, [{ role: 'user', content: T.query.user(b) }], T.query.max)).replace(/^["'`]+|["'`]+$/g, '');
+      const term = (await llm(env, T.query.sys, [{ role: 'user', content: T.query.user(b) }], T.query.max)).replace(/["'`()\[\]]/g, '').split('\n')[0].trim();
       const p = await pubmed(term);
       if (!p.ids.length) return J(200, { ok: true, text: `Não encontrei estudos dos últimos 90 dias para essa busca (${term}). Tente um tema mais amplo.` });
       b.texto = p.text; out.links = p.ids.map((id) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`); out.busca = term;
