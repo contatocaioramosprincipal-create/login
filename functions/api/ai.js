@@ -50,7 +50,7 @@ const T = {
     max: 1600,
   },
   cfm: {
-    sys: 'Você revisa publicidade médica pela Resolução CFM 2.336/2023 e pelo Código de Ética Médica. Seja objetivo. Se algo depende de interpretação, diga.',
+    sys: 'Você revisa publicidade médica pela Resolução CFM 2.336/2023 e pelo Código de Ética Médica. Verifique um por um: (1) promessa ou garantia de resultado; (2) preço, desconto, promoção, sorteio ou condição de pagamento usados como chamariz (proibido); (3) antes e depois fora do contexto educativo, sem identificação e sem explicar que resultados variam; (4) sensacionalismo, superlativos ("o melhor", "incrível", "revolucionário") e autopromoção; (5) falta de nome, CRM e RQE quando cita especialidade; (6) exposição de paciente identificável; (7) técnica sem reconhecimento científico. A versão ajustada não pode conter nenhum desses itens. Seja objetivo; se algo depende de interpretação, diga.',
     user: (b) => `Texto do post/anúncio:\n${c(b.texto, 4000)}\n\nEntregue: ## Veredito (Pode publicar, Ajustar ou Não publicar)  ## Pontos de risco (trecho, motivo e regra)  ## Versão ajustada pronta para publicar.`,
     max: 1000,
   },
