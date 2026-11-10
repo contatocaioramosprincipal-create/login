@@ -115,6 +115,7 @@ function aiError(el,e){el.innerHTML=`<p class="err">${esc(e.message)}</p>`}
 
 /* ---------- registro das 10 ferramentas ---------- */
 const TOOLS=[
+ {id:'tools',ic:'doc',t:'AXIS Tools',d:'Checklists, repasses e acesso rápido aos documentos, calculadoras e plantões.',mods:[['inicio','Visão geral',()=>window.axToolsHome],['check','Axis Check',()=>window.axToolsCheck],['repasse','Axis Repasse',()=>window.axToolsRepasse]]},
  {id:'consulta',ic:'mic',t:'Consulta IA',d:'Grave ou dite a consulta e receba evolução, orientações ao paciente e documentos prontos.',mods:[['gravar','Consulta',()=>window.mConsulta]]},
  {id:'documentos',ic:'doc',t:'Central de Documentos',d:'Atestado, relatórios, justificativas, termos e encaminhamentos em segundos.',mods:[['modelos','Modelos rápidos',()=>documentos],['ia','Escrever com IA',()=>window.mDocIA]]},
  {id:'calc',ic:'calc',t:'Calculadoras Clínicas',d:'IMC, função renal, idade gestacional, dose por peso, escores e conversões.',mods:[['imc','IMC e superfície',()=>window.cIMC],['renal','Função renal',()=>window.cRenal],['ig','Idade gestacional',()=>window.cIG],['dose','Dose por peso',()=>window.cDose],['escores','Escores',()=>window.cEscores],['conv','Conversões',()=>window.cConv]]},
