@@ -25,14 +25,15 @@ const ic=k=>`<span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="
 /* ---------- login / cadastro ---------- */
 async function auth(path,body){const r=await fetch('/api/auth/'+path,{method:'POST',headers:{'content-type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)});let j={};try{j=await r.json()}catch{}if(!r.ok||!j.ok)throw new Error(j.error||'Não foi possível agora. Tente de novo.');return j.user}
 function onboarding(mode){
-  mode=mode||(ls.get('axl_had_account',false)?'login':'signup');
+  mode=mode||(new URLSearchParams(location.search).has('invite')?'signup':(ls.get('axl_had_account',false)?'login':'signup'));
+  const inviteToken=new URLSearchParams(location.search).get('invite');
   $('#bar').hidden=true;$('#foot').hidden=true;
   const pw=(id,ac)=>`<div class="pw"><input id="${id}" name="senha" type="password" required autocomplete="${ac}" minlength="8" placeholder="Mínimo 8 caracteres"><button type="button" class="eye" aria-label="Mostrar senha" data-eye="${id}">Mostrar</button></div>`;
   main.innerHTML=`<div class="onb">
   <div class="onb-l">
     <a class="brand" href="/lab/" aria-label="Voltar ao AXIS Lab"><svg width="30" height="34" viewBox="0 0 44 50" aria-hidden="true"><polygon points="21,2 0,46 15,46" fill="#F2EBDD"/><polygon points="22,5 42,46 28,46 20.5,19" fill="#7FB89A"/></svg><b>AXIS</b><span>LAB</span></a>
     <div>
-      <div class="eyebrow" style="color:var(--sage)">Grátis para médicos</div>
+      <div class="eyebrow" style="color:var(--sage)">Ferramentas para médicos</div>
       <h1>Ferramentas para o dia a dia do médico.</h1>
       <ul><li>Consulta com IA: grave e receba a evolução pronta</li><li>Documentos, calculadoras clínicas e novidades da sua área</li><li>Financeiro, glosas de convênio e marketing dentro do CFM</li><li>Secretária, jurídico e a sua vida fora do consultório</li></ul>
     </div>
@@ -51,22 +52,25 @@ function onboarding(mode){
       <button class="btn" type="submit">Entrar</button>
       <p class="hint">Esqueceu a senha? Fale com a AXIS no <a href="https://instagram.com/axismed_marketing" target="_blank" rel="noopener">Instagram</a> que liberamos um novo acesso.</p>
     </form>`:`<form id="authF" novalidate style="display:grid;gap:16px">
-      <div><h2 style="font-size:28px">Crie seu acesso grátis.</h2><p class="muted" style="margin-top:4px">Leva 30 segundos.</p></div>
+      <div><h2 style="font-size:28px">${inviteToken?"Ative seu presente de 1 ano.":"Crie seu acesso."}</h2><p class="muted" style="margin-top:4px">${inviteToken?"Convite promocional AXIS Lab. Confirme seus dados abaixo.":"Leva menos de um minuto."}</p></div>
       <div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" name="nome" required autocomplete="name" placeholder="Dra. Ana Souza"></div>
-      <div class="grid2">
-        <div class="field"><label for="f-esp">Especialidade</label><input id="f-esp" name="especialidade" required placeholder="Dermatologia" list="esps"></div>
-        <div class="field"><label for="f-crm">CRM / UF <span style="font-weight:400">(opcional)</span></label><input id="f-crm" name="crm" placeholder="123456/SP"></div>
-        <div class="field"><label for="f-cid">Cidade / UF</label><input id="f-cid" name="cidade" required placeholder="Sorocaba/SP"></div>
-        <div class="field"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(15) 99999-9999"></div>
-      </div>
+      <div class="field"><label for="f-wa">Telefone com DDD</label><input id="f-wa" name="whatsapp" type="tel" required autocomplete="tel" placeholder="(48) 99999-9999"></div>
       <div class="field"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" required autocomplete="email" placeholder="voce@clinica.com.br"></div>
+      <div class="field"><label for="f-insta">Instagram do médico</label><input id="f-insta" name="instagram" required maxlength="80" placeholder="@seuperfil"></div>
       <div class="field"><label for="f-pw">Crie uma senha</label>${pw('f-pw','new-password')}</div>
-      <label class="consent"><input type="checkbox" id="f-ok" name="consent"> <span>Concordo que a AXIS guarde estes dados para liberar o acesso e entrar em contato comigo. Nada de dados de pacientes é guardado nas ferramentas.</span></label>
+      <label class="consent"><input type="checkbox" id="f-ok" name="consent"> <span>Concordo com o uso dos meus dados cadastrais para manter a conta e comunicar sobre o serviço. Não informe dados de pacientes.</span></label>
       <p class="hint" id="authErr" role="alert" style="color:var(--red)"></p>
       <button class="btn" type="submit">Criar conta e entrar</button>
     </form>`}
   </div></div></div>
-  <datalist id="esps">${['Clínica médica','Dermatologia','Pediatria','Ginecologia e obstetrícia','Urologia','Cardiologia','Ortopedia','Psiquiatria','Endocrinologia','Oftalmologia','Otorrinolaringologia','Neurologia','Gastroenterologia','Medicina do trabalho','Perícia médica','Cirurgia plástica','Nutrologia'].map(e=>`<option value="${e}">`).join('')}</datalist>`;
+  <div id="invite-note" class="sr" aria-live="polite"></div>`;
+  if(inviteToken && mode==='signup'){
+    fetch('/api/auth/invite-info?token='+encodeURIComponent(inviteToken)).then(r=>r.json()).then(j=>{
+      const err=$('#authErr');if(!err)return;
+      if(!j.ok){err.textContent=j.error||'Convite indisponível.';return}
+      const field=$('#f-mail');if(field){field.value=j.email;field.readOnly=true;}
+    }).catch(()=>{});
+  }
   main.addEventListener('click',e=>{const t=e.target.closest('[data-mode]');if(t){onboarding(t.dataset.mode)}
     const eye=e.target.closest('[data-eye]');if(eye){const i=$('#'+eye.dataset.eye);const sh=i.type==='password';i.type=sh?'text':'password';eye.textContent=sh?'Ocultar':'Mostrar'}});
   $('#authF').addEventListener('submit',async e=>{
@@ -74,13 +78,14 @@ function onboarding(mode){
     const btn=e.target.querySelector('[type=submit]');btn.disabled=true;const old=btn.textContent;btn.textContent='Aguarde…';
     try{
       if(mode==='signup'){
-        if(!f.nome||!f.especialidade||!f.cidade||!f.whatsapp||!f.email)throw new Error('Preencha nome, especialidade, cidade, WhatsApp e e-mail.');
+        if(!f.nome||!f.whatsapp||!f.email||!f.instagram)throw new Error('Preencha nome, telefone, e-mail e Instagram.');
         if(String(f.whatsapp).replace(/\D/g,'').length<10)throw new Error('Confira o WhatsApp com DDD.');
         if(String(f.senha||'').length<8)throw new Error('A senha precisa ter pelo menos 8 caracteres.');
         if(!$('#f-ok').checked)throw new Error('Marque a autorização para continuar.');
         f.consent=true;
+        if(inviteToken)f.invite_token=inviteToken;
       }
-      const u=await auth(mode,f);ls.set('axl_had_account',true);const nx=new URLSearchParams(location.search).get('next');if(nx&&/^\/[a-z]/.test(nx)){location.href=nx;return}user=u;location.hash='#/';route();
+      const u=await auth(mode,f);ls.set('axl_had_account',true);const nx=new URLSearchParams(location.search).get('next');if(nx&&/^\/[a-z]/.test(nx)){location.href=nx;return}user=u;if(inviteToken && mode==='login'){try{await auth('redeem',{invite_token:inviteToken})}catch(x){toast(x.message)}}if(inviteToken){history.replaceState(null,'',location.pathname+'#/')}location.hash='#/';route();
     }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent=old}
   });
 }
@@ -134,6 +139,7 @@ function home(p){
   const first=(p.nome||'').replace(/^(dra?\.?\s*)/i,'').split(' ')[0];
   main.innerHTML=`<div class="wrap">
   <section class="hello"><h1>Olá, ${esc(first||'doutor(a)')}.</h1><p>O que vamos resolver hoje?</p></section>
+  ${p.is_admin?'<div style="margin:0 0 20px"><a href="#/admin" class="btn" style="text-decoration:none;background:var(--forest);color:var(--cream)">Gerenciar convites promocionais</a></div>':''}
   <div class="tools">${TOOLS.map((t,i)=>`<a class="tool${i===0?' hero-tool':''}" href="#/${t.id}">${ic(t.ic)}<h3>${t.t}</h3><p>${t.d}</p><span class="tag">${t.mods.length>1?t.mods.length+' ferramentas':'Abrir'}</span></a>`).join('')}</div>
   <div class="card" style="margin:20px 0 48px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--forest);color:var(--cream);border:0">
     <div style="max-width:560px"><div class="eyebrow" style="color:var(--sage-2)">Quer que a gente faça por você?</div><p style="margin-top:8px;font-size:17px">A AXIS cuida do site, do Google, do Instagram, dos anúncios e da secretária de IA do seu consultório.</p></div>
@@ -147,6 +153,27 @@ function head(t,s){
   return `<div class="wrap"><div class="view-h noprint"><a class="back" href="#/">‹ Todas as ferramentas</a>${tool?`<div class="eyebrow">${esc(tool.t)}</div>`:''}${tabs}<h1>${t}</h1>${s?`<p class="muted" style="max-width:680px">${s}</p>`:''}</div>`;
 }
 
+function adminInvites(){
+  main.innerHTML='<div class="wrap"><div class="view-h"><a class="back" href="#/">‹ Voltar às ferramentas</a><div class="eyebrow">Administração AXIS Lab</div><h1>Convites promocionais</h1><p class="muted">Gere um acesso gratuito de 365 dias, vinculado ao e-mail do médico.</p></div><form id="promo-form" class="card form-sec" style="max-width:700px;margin-bottom:18px"><div class="field"><label for="promo-email">E-mail de quem vai receber</label><input id="promo-email" name="email" type="email" required placeholder="medico@exemplo.com"></div><button class="btn" type="submit">Criar convite e enviar</button><p class="hint">O link é válido por 7 dias e só pode ser usado com o e-mail indicado. O benefício começa na ativação e dura 365 dias.</p></form><div id="promo-result" aria-live="polite"></div><div class="card" style="margin:18px 0 40px"><h3>Últimos convites</h3><div id="promo-list" style="margin-top:12px">Carregando…</div></div></div>';
+  const status=()=>fetch('/api/auth/invites',{credentials:'same-origin'}).then(r=>r.json()).then(j=>{
+    const box=$('#promo-list');if(!box)return;
+    box.innerHTML=j.ok?(j.invites.length?j.invites.map(i=>'<div style="padding:12px 0;border-bottom:1px solid #ddd"><b>'+esc(i.email)+'</b><br><span class="muted">'+(i.redeemed_at?'Ativado em '+esc(i.redeemed_at):i.email_sent_at?'E-mail enviado · aguardando ativação':'Aguardando envio/ativação')+' · Convite criado '+esc(i.created_at)+'</span></div>').join(''):'Nenhum convite criado.'):esc(j.error||'Falha ao carregar.');
+  }).catch(()=>{});
+  status();
+  $('#promo-form').addEventListener('submit',async e=>{
+    e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Criando…';
+    const result=$('#promo-result');
+    try{
+      const r=await fetch('/api/auth/invite',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({email:e.target.elements.email.value})});
+      const j=await r.json();if(!r.ok||!j.ok)throw new Error(j.error||'Falha no convite.');
+      result.innerHTML='<div class="card" style="margin-top:12px"><b>'+esc(j.sent?'Convite enviado por e-mail':'Convite criado — envio automático não configurado')+'</b><p class="muted" style="margin-top:8px">Link único para o destinatário:</p><input id="promo-link" readonly style="width:100%" value="'+esc(j.url)+'"><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="opt" type="button" id="promo-copy">Copiar link</button><a class="opt" id="promo-manual" href="mailto:'+encodeURIComponent(j.email)+'?subject='+encodeURIComponent('Convite AXIS Lab — acesso promocional de 1 ano')+'&body='+encodeURIComponent('Você recebeu um convite do AXIS Lab para acesso promocional por 1 ano. Ative em até 7 dias: '+j.url)+'">Enviar pelo meu e-mail</a></div></div>';
+      $('#promo-copy').onclick=()=>navigator.clipboard.writeText(j.url).then(()=>toast('Link copiado'));
+      status();
+    }catch(x){result.innerHTML='<p class="err">'+esc(x.message)+'</p>'}
+    finally{b.disabled=false;b.textContent='Criar convite e enviar'}
+  });
+}
+
 /* ---------- roteador ---------- */
 let user;
 async function loadUser(){try{const r=await fetch('/api/auth/me',{credentials:'same-origin'});const j=await r.json();return j.user||null}catch{return null}}
@@ -157,6 +184,7 @@ async function route(){
   {const nx=new URLSearchParams(location.search).get('next');if(nx&&/^\/[a-z]/.test(nx)){location.replace(nx);return}}
   $('#bar').hidden=false;$('#foot').hidden=false;
   const [tid,mid]=location.hash.replace(/^#\/?/,'').split('/');
+  if(tid==='admin' && user.is_admin){CUR={tool:null,mod:null};adminInvites();return}
   const tool=TOOLS.find(t=>t.id===tid);
   if(!tool){CUR={tool:null,mod:null};home(user);document.title='AXIS Lab';scrollTo(0,0);return}
   const mod=tool.mods.find(m=>m[0]===mid)||tool.mods[0];
