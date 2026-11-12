@@ -409,3 +409,72 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
   .cred.small li{font-size:14px}.cred.small{grid-template-columns:1fr}
   .hub-h{margin-bottom:30px}
 }
+
+/* ===== Home: ecossistema em uma tela + agendamento (v11) ===== */
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:10px}
+.eco{background:var(--forest);color:var(--on-dark-2);position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;padding:96px 0 18px}
+.eco::before{content:"";position:absolute;left:-20%;top:-40%;width:80%;aspect-ratio:1;background:radial-gradient(closest-side,rgba(127,184,154,.13),transparent);pointer-events:none}
+.eco>.wrap{position:relative;display:flex;flex-direction:column;flex:1;width:100%}
+.eco-h{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:18px}
+.eco h1{font-size:clamp(28px,3vw,44px);letter-spacing:-.04em;line-height:1.02;max-width:760px}
+.eco-cta{min-height:58px;padding:16px 28px;font-size:17.5px;flex:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.eco-cta svg{width:20px;height:20px}
+.eco-grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:14px;min-height:430px}
+.eco-grid .door{min-height:0;height:100%}
+.eco-grid .e-a{grid-column:span 2}
+.eco-grid .e-f{grid-column:span 2}
+.eco-grid .e-a b,.eco-grid .e-f b{font-size:clamp(24px,2.2vw,32px)}
+.eco-grid .door.lab{padding-top:22px}
+.eco-down{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;font-size:14.5px;font-weight:600;color:var(--on-dark-2);text-decoration:none}
+.eco-down svg{width:18px;height:18px;color:var(--sage);animation:bob 1.8s ease-in-out infinite}
+.eco-down:hover{color:var(--on-dark)}
+@keyframes bob{50%{transform:translateY(4px)}}
+
+.book{position:relative;color:var(--on-dark-2);padding:96px 0;background:linear-gradient(100deg,rgba(15,42,34,.97) 0%,rgba(15,42,34,.9) 48%,rgba(15,42,34,.72) 100%),url(/img/bgfinal.jpg) center/cover no-repeat;scroll-margin-top:0}
+.book .wrap{display:grid;grid-template-columns:1fr minmax(0,560px);gap:56px;align-items:center}
+.book h2{color:var(--on-dark);font-size:clamp(36px,4.2vw,60px);letter-spacing:-.045em;line-height:.98}
+.book .lede{font-size:clamp(17px,1.4vw,20px);margin:20px 0 28px;max-width:560px}
+.book-l{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.book-l li{display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:15px;line-height:1.45}
+.book-l svg{width:30px;height:30px;padding:6px;border-radius:50%;background:rgba(127,184,154,.18);color:var(--sage)}
+.book-l b{display:block;color:var(--on-dark);font-size:16.5px}
+.book .spec{margin-top:30px}
+.book-f{box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.book-f h3{font-size:24px}
+.book-b{min-height:64px;font-size:19px;width:100%}
+.book-b svg{width:20px;height:20px}
+.card-f .fine{font-size:13.5px;color:var(--mute)}
+@media (max-width:1100px){.eco-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:auto}.eco-grid .e-a,.eco-grid .e-f{grid-column:span 1}.eco-grid .door{min-height:220px}.eco-grid .e-f{grid-column:span 2}}
+@media (max-width:920px){
+  .eco{min-height:0;padding:86px 0 26px}
+  .eco-h{flex-direction:column;align-items:flex-start;gap:16px}
+  .eco-grid{grid-template-columns:1fr 1fr;min-height:0}
+  .eco-grid .e-a,.eco-grid .e-f{grid-column:span 2}
+  .eco-grid .e-f{grid-column:span 2}
+  .book{padding:64px 0}
+  .book .wrap{grid-template-columns:1fr;gap:34px}
+}
+@media (max-width:560px){
+  .eco-cta{width:100%}
+  .eco-grid{gap:10px}
+  .eco-grid .door{min-height:168px}
+  .eco-grid .e-a{min-height:220px}
+  .eco-grid .door:not(.e-a):not(.e-f) small{display:none}
+  .card-f .g2{grid-template-columns:1fr}
+}
+.eco-grid{min-height:340px}
+@media (min-width:921px) and (max-height:820px){
+  .eco{padding-top:84px;padding-bottom:12px}
+  .eco h1{font-size:clamp(26px,2.5vw,36px)}
+  .eyebrow{margin-bottom:6px}
+  .eco-h{margin-bottom:14px}
+  .eco-cta{min-height:52px;padding:13px 24px}
+  .eco-grid{gap:12px}
+  .eco-grid .door{padding:18px}
+  .eco-grid .door small{font-size:13.5px}
+  .eco-grid .door b{font-size:19px}
+  .eco-grid .e-a b,.eco-grid .e-f b{font-size:clamp(22px,2vw,28px)}
+  .eco-grid .door .chips{margin-bottom:8px}
+  .eco-down{margin-top:10px}
+}
+.eco h1{max-width:920px}
