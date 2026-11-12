@@ -650,3 +650,4 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .wa{box-shadow:0 0 0 7px #0E1D18,0 0 0 8px rgba(127,184,154,.45),0 30px 60px rgba(0,0,0,.45)}
 .prints figcaption b{color:var(--cream)}
 .eco-grid .door.e-c::before,.eco-grid .door.e-d::before{background:linear-gradient(180deg,rgba(6,21,15,.05) 10%,rgba(6,21,15,.7) 50%,rgba(6,21,15,.97) 78%)}
+.eco-grid .door.e-a::before{background:linear-gradient(180deg,rgba(6,21,15,0) 15%,rgba(6,21,15,.6) 50%,rgba(6,21,15,.96) 80%)}
