@@ -622,3 +622,7 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .door .wa-mini .wt{font-size:9.5px;margin-top:0}
 @media (max-width:560px){.eco .eco-grid .door.e-a .d-tx small{display:none}}
 .eco-grid .door.lab .chips{display:none}
+/* v17 · imagens largas nos topos das páginas internas + fundo do AXIS Lab */
+.phero .ph-wide{align-self:center}
+.phero .ph-wide img{aspect-ratio:16/9;object-fit:cover;box-shadow:0 0 0 1px rgba(201,162,94,.35),0 30px 70px rgba(0,0,0,.45)}
+.lab-bg{background:linear-gradient(90deg,rgba(8,24,19,.97) 0%,rgba(8,24,19,.9) 42%,rgba(8,24,19,.55) 100%),url(/img/axis-lab-hero.jpg) 65% 50%/cover no-repeat}
