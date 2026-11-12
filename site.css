@@ -598,3 +598,26 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .door.lab::before{background:linear-gradient(180deg,rgba(8,24,19,.15) 15%,rgba(8,24,19,.6) 52%,rgba(8,24,19,.94) 100%)}
 @media (max-width:1100px){.eco-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.eco-grid .door{min-height:220px}.eco-grid .e-a,.eco-grid .e-f{grid-column:span 2}.eco-grid .e-e{grid-column:auto}}
 @media (max-width:560px){.eco .eco-grid .door.e-f b{font-size:clamp(26px,8cqi,34px)}.eco-grid .e-f{min-height:240px}}
+/* v16 · grade uniforme 3x2: Quem somos, Secretária, Social / Tráfego, Automações, AXIS Lab */
+.eco-grid,.eco-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
+.eco-grid .door,.eco-grid .e-a,.eco-grid .e-e,.eco-grid .e-f{grid-column:auto}
+.eco .eco-grid .door b,.eco .eco-grid .door.e-a b{font-size:clamp(19px,8cqi,30px)}
+.door.e-a .d-tx{max-width:none}
+.door .wa-mini{top:14px;right:62px;max-width:200px;transform:rotate(3deg) scale(.86);transform-origin:top right}
+.door .wa-mini .wb:nth-child(n+3){display:none}
+.door:hover .wa-mini{transform:rotate(0) scale(.86)}
+@container (max-width:620px){.door .wa-mini{display:block}}
+@container (max-width:300px){.door .wa-mini{display:none}}
+@media (max-width:920px){.eco-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.eco-grid .door,.eco-grid .e-a{min-height:230px}}
+@media (max-width:560px){.eco-grid .door,.eco-grid .e-a{min-height:190px}.eco .eco-grid .door.e-a b{font-size:clamp(19px,9.5cqi,26px)}.eco-grid .door.e-a small{display:none}}
+.door .wa-mini .wa-h{display:none}
+.door .wa-mini{top:16px;right:64px;max-width:210px;transform:none;background:transparent;box-shadow:none;border-radius:0;overflow:visible}
+.door:hover .wa-mini{transform:translateY(-2px)}
+.door .wa-mini .wa-b{background:none;padding:0;gap:6px}
+.door .wa-mini .wb{box-shadow:0 8px 20px rgba(0,0,0,.35);font-size:12px}
+.door .wa-mini .wb.in{background:rgba(30,43,37,.92);backdrop-filter:blur(6px)}
+.door .wa-mini .wb.out{background:rgba(31,90,69,.95)}
+.door .wa-mini{max-width:190px}
+.door .wa-mini .wb{font-size:11.5px;padding:5px 9px 4px;max-width:100%}
+.door .wa-mini .wt{font-size:9.5px;margin-top:0}
+@media (max-width:560px){.eco .eco-grid .door.e-a .d-tx small{display:none}}
