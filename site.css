@@ -621,3 +621,4 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .door .wa-mini .wb{font-size:11.5px;padding:5px 9px 4px;max-width:100%}
 .door .wa-mini .wt{font-size:9.5px;margin-top:0}
 @media (max-width:560px){.eco .eco-grid .door.e-a .d-tx small{display:none}}
+.eco-grid .door.lab .chips{display:none}
