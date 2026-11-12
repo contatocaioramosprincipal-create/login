@@ -481,3 +481,33 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .nav-l a{white-space:nowrap}
 @media (max-width:1180px){.nav-l{gap:16px;font-size:14px}}
 @media (max-width:1060px){.nav-l{display:none}}
+
+/* ===== Cards v12: títulos que não quebram feio + AXIS Lab com foto ===== */
+.door{container-type:inline-size}
+.door::before{background:linear-gradient(180deg,rgba(9,25,20,0) 25%,rgba(9,25,20,.55) 55%,rgba(9,25,20,.93) 100%)}
+.door:hover::before{background:linear-gradient(180deg,rgba(9,25,20,0) 20%,rgba(9,25,20,.5) 55%,rgba(9,25,20,.9) 100%)}
+.door .d-tx{display:block;min-width:0}
+.door b,.eco-grid .door b,.eco-grid .e-a b,.eco-grid .e-f b{font-size:clamp(18px,8cqi,30px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance;overflow-wrap:normal;hyphens:none}
+.eco-grid .e-a b,.eco-grid .e-f b{font-size:clamp(22px,5.4cqi,34px)}
+.door .d-sub{display:block;font-size:.56em;font-weight:600;letter-spacing:0;color:var(--sage);margin-top:4px}
+.door small,.eco-grid .door small{font-size:clamp(13px,4.6cqi,15px);text-wrap:pretty;margin-top:8px}
+.eco-grid .e-a small,.eco-grid .e-f small{font-size:clamp(13.5px,2.6cqi,16px)}
+@container (max-width:250px){.door small{display:none}}
+.door.lab{background-color:var(--forest-2);color:var(--on-dark);padding-top:22px}
+.door.lab::before{display:block;background:linear-gradient(90deg,rgba(15,42,34,.96) 0%,rgba(15,42,34,.82) 45%,rgba(15,42,34,.25) 100%)}
+.door.lab small{color:rgba(242,235,221,.82)}
+.door.lab .d-ic{background:rgba(127,184,154,.22);color:var(--sage)}
+.door .chips em{background:rgba(242,235,221,.12);color:var(--cream);box-shadow:inset 0 0 0 1px rgba(242,235,221,.18);backdrop-filter:blur(4px)}
+@container (max-width:340px){.door .chips{display:none}}
+.door b,.eco-grid .door b{font-size:clamp(19px,9.5cqi,30px)}
+.eco-grid .e-a b,.eco-grid .e-f b{font-size:clamp(24px,6.2cqi,36px)}
+.door .d-sub{font-size:clamp(13px,4.8cqi,15px);font-weight:600;letter-spacing:.01em;margin-top:5px}
+.door .d-tx small{display:block}
+@container (max-width:250px){.door .d-tx small{display:none}}
+@media (max-width:560px){.eco-grid .e-a b{font-size:clamp(26px,8cqi,34px)}.eco-grid .e-a{min-height:240px}}
+@media (max-width:560px){
+  .eco .eco-grid .door b{font-size:clamp(19px,9.5cqi,26px)}
+  .eco .eco-grid .door.e-a b,.eco .eco-grid .door.e-f b{font-size:clamp(26px,8cqi,34px)}
+  .eco .eco-grid .door.e-a small,.eco .eco-grid .door.e-f small{display:block}
+  .eco .eco-grid .door .chips em:nth-child(n+4){display:none}
+}
