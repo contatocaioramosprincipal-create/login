@@ -590,3 +590,11 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .door .wa-mini{right:66px}
 .door.e-a .d-tx{max-width:calc(100% - 320px)}
 @container (max-width:500px){.door.e-a .d-tx{max-width:none}}
+/* v15 · ordem: Quem somos + Secretária largos em cima, 4 iguais embaixo (AXIS Lab é um deles) */
+.eco-grid{grid-template-columns:repeat(4,1fr)}
+.eco-grid .e-a,.eco-grid .e-f{grid-column:span 2}
+.eco-grid .e-e{grid-column:auto}
+.eco-grid .door.lab{padding-top:18px}
+.door.lab::before{background:linear-gradient(180deg,rgba(8,24,19,.15) 15%,rgba(8,24,19,.6) 52%,rgba(8,24,19,.94) 100%)}
+@media (max-width:1100px){.eco-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.eco-grid .door{min-height:220px}.eco-grid .e-a,.eco-grid .e-f{grid-column:span 2}.eco-grid .e-e{grid-column:auto}}
+@media (max-width:560px){.eco .eco-grid .door.e-f b{font-size:clamp(26px,8cqi,34px)}.eco-grid .e-f{min-height:240px}}
