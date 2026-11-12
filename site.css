@@ -551,3 +551,42 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
 .book-b svg{color:var(--gold)}
 .nav .b-cream{background:transparent;color:var(--gold-l);box-shadow:inset 0 0 0 1px rgba(201,162,94,.6)}
 .nav .b-cream:hover{background:var(--gold);color:var(--night)}
+
+/* ===== Prints de WhatsApp (secretária de IA) ===== */
+.wa{display:flex;flex-direction:column;width:100%;max-width:340px;border-radius:28px;overflow:hidden;background:#0B1612;box-shadow:0 0 0 7px #0E1D18,0 0 0 8px rgba(201,162,94,.55),0 30px 60px rgba(0,0,0,.45);font-family:Inter,system-ui,sans-serif;text-align:left}
+.wa-h{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;background:#14231D;border-bottom:1px solid rgba(201,162,94,.18)}
+.wa-av{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#0B211A;font-weight:800;font-size:15px;flex:none}
+.wa-n{display:flex;flex-direction:column;line-height:1.2}.wa-n b{color:#F2EBDD;font-size:14px;font-weight:600}.wa-n small{color:#7FB89A;font-size:12px}
+.wa-b{display:flex;flex-direction:column;gap:6px;padding:14px 12px 16px;background:#0B1612 radial-gradient(circle at 1px 1px,rgba(242,235,221,.05) 1px,transparent 0) 0 0/14px 14px;flex:1}
+.wb{display:block;max-width:84%;padding:7px 10px 6px;border-radius:12px;font-size:13.5px;line-height:1.38;color:#EDE6D8;position:relative}
+.wb.in{align-self:flex-start;background:#1E2B25;border-top-left-radius:4px}
+.wb.out{align-self:flex-end;background:#1F5A45;border-top-right-radius:4px}
+.wt{display:block;text-align:right;font-size:10.5px;color:rgba(237,230,216,.55);margin-top:2px}
+.wt .ck{font-style:normal;color:#7FD3F7;margin-left:4px;letter-spacing:-2px}
+/* card da home */
+.door .wa-mini{position:absolute;right:22px;top:72px;max-width:270px;z-index:1;transform:rotate(2deg);box-shadow:0 0 0 5px #0E1D18,0 0 0 6px rgba(201,162,94,.55),0 24px 50px rgba(0,0,0,.5)}
+.door .wa-mini .wa-h{padding:10px 12px}.door .wa-mini .wa-av{width:28px;height:28px;font-size:13px}
+.door .wa-mini .wa-b{padding:10px 10px 12px;gap:5px}.door .wa-mini .wb{font-size:12.5px;padding:6px 9px 5px}
+.door:hover .wa-mini{transform:rotate(0deg) translateY(-3px)}
+.door .wa-mini{transition:transform .35s ease}
+.door.e-a .d-tx{max-width:calc(100% - 300px)}
+@container (max-width:620px){.door .wa-mini{display:none}.door.e-a .d-tx{max-width:none}}
+@media (min-width:921px) and (max-height:820px){.door .wa-mini{top:62px;max-width:250px}.door .wa-mini .wb:nth-child(1){display:none}}
+/* seção na página da secretária */
+.s-prints{background:linear-gradient(180deg,rgba(8,24,19,.92),rgba(8,24,19,.97)),url(/img/recepcao.jpg) center/cover;color:var(--on-dark-2)}
+.s-prints .h2{color:var(--on-dark);max-width:760px;margin-bottom:40px}
+.prints{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;align-items:start}
+.prints figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:22px}
+.prints figcaption{text-align:center;font-size:15px;line-height:1.5;max-width:300px}
+.prints figcaption b{display:block;color:var(--gold-l);font-size:17px;margin-bottom:4px}
+@media (max-width:920px){.prints{grid-template-columns:1fr;gap:44px}}
+.door .wa-mini{top:20px;right:74px;max-width:236px;transform:rotate(3deg)}
+@media (min-width:921px) and (max-height:820px){.door .wa-mini{top:20px;max-width:236px}.door .wa-mini .wb:nth-child(1){display:block}}
+.door.e-a .d-tx{max-width:calc(100% - 300px)}
+@container (max-width:620px){.door .wa-mini{display:block}.door.e-a .d-tx{max-width:calc(100% - 270px)}}
+@container (max-width:500px){.door .wa-mini{display:none}.door.e-a .d-tx{max-width:none}}
+.eco .eco-grid .door .wa-n b,.door .wa-n b{font-size:13px;letter-spacing:0;line-height:1.2;font-weight:600;text-wrap:nowrap}
+.eco .eco-grid .door .wa-n small,.door .wa-n small{display:block;font-size:11px;margin:0;color:#7FB89A}
+.door .wa-mini{right:66px}
+.door.e-a .d-tx{max-width:calc(100% - 320px)}
+@container (max-width:500px){.door.e-a .d-tx{max-width:none}}
