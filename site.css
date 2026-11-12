@@ -478,3 +478,6 @@ dialog::backdrop{background:rgba(9,32,26,.6)}
   .eco-down{margin-top:10px}
 }
 .eco h1{max-width:920px}
+.nav-l a{white-space:nowrap}
+@media (max-width:1180px){.nav-l{gap:16px;font-size:14px}}
+@media (max-width:1060px){.nav-l{display:none}}
